@@ -1,27 +1,32 @@
-
-
-.app-menu-container{
-    height: 150vh;
-    position: relative;
-
+.app-menu-container {
+  height: 150vh;
+  position: relative;
 }
 
-.app-menu-wrapper{
-    height: 100vh;
-    display: block;
-    position: relative;
-    background-color: rgb(15, 15, 15);
-}
-
-.app-menu{
-    padding: 0 0 0.75rem 1rem;
+.app-navbar{
+    top: 0;
     position: absolute;
-    bottom: 0;
-    width: fit-content;
+    z-index: 100;
+    width: 100%;
+    background-color: rgb(15, 15, 15) ;
 }
 
-.foo{
-    display: block;
-    height: 100vh;
-    background-color: green;
+.app-menu-wrapper {
+  height: 100vh;
+  display: block;
+  position: relative;
+  background-color: rgb(15, 15, 15);
+}
+
+.app-menu {
+  padding: 0 0 0.75rem 1rem;
+  position: absolute;
+  bottom: 0;
+  width: fit-content;
+}
+
+.foo {
+  display: block;
+  height: 100vh;
+  background-color: green;
 }

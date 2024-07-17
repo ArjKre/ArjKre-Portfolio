@@ -3,6 +3,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 @Component({
   selector: 'app-root',
   template: ` <div #appMenuContainer class="app-menu-container">
+      <app-navbar class="app-navbar"></app-navbar>
       <div class="app-menu-wrapper">
         <app-menu
           [menuContainer]="menuContainerRef"
