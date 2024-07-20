@@ -28,7 +28,7 @@ import { MenuItem } from './menu/menu-item/menu-item';
         ></app-proj>
       </div>
     </div>
-    <div class="foo"></div>`,
+    <app-contact class="app-contact"></app-contact>`,
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
