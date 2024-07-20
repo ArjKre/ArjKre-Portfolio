@@ -1,32 +1,43 @@
 .app-menu-container {
   height: 150vh;
   position: relative;
+  scroll-behavior: smooth;
 }
 
-.app-navbar{
-    top: 0;
-    position: absolute;
-    z-index: 100;
-    width: 100%;
-    background-color: rgb(15, 15, 15) ;
+.app-navbar {
+  top: 0;
+  position: absolute;
+  z-index: 100;
+  width: 100%;
+  background-color: rgb(15, 15, 15);
 }
 
-.app-menu-wrapper {
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 100vh;
-  display: block;
   position: relative;
   background-color: rgb(15, 15, 15);
+}
+
+.app-proj {
+  width: 80vw;
+  height: max-content;
+  color: #ffff;
+  position: relative;
+  z-index: 150;
 }
 
 .app-menu {
   padding: 0 0 0.75rem 1rem;
   position: absolute;
   bottom: 0;
+  left: 0;
   width: fit-content;
 }
 
 .foo {
   display: block;
-  height: 100vh;
-  background-color: green;
+  height: 50vh;
 }

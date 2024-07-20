@@ -1,0 +1,97 @@
+.proj-ctr {
+  height: inherit;
+  // background-image: url(../../assets/svg/circle-scatter-haikei.svg);
+  // background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.flx {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 5rem;
+}
+
+.proj-txt {
+  width: 50%;
+
+  .heading {
+    font-family: var(--subheading-font);
+    font-weight: 100;
+    font-size: 2.4rem;
+  }
+  .sub-heading {
+    font-family: var(--sub-font);
+    font-style: italic;
+    font-size: 2rem;
+  }
+  .para {
+    padding-top: 1.5rem;
+    text-wrap: pretty;
+  }
+
+  .para,
+  .pltflang {
+    font-family: var(--body-font);
+    font-size: 1.6rem;
+  }
+
+  .pltflang {
+    width: max-content;
+    display: flex;
+    gap: 2.5rem;
+    padding-top: 1rem;
+  }
+
+  .poof {
+    position: relative;
+    cursor: pointer;
+  }
+
+  .lang-0::after,
+  .lang-1::after,
+  .lang-2::after,
+  .lang-3::after {
+    content: "";
+    position: absolute;
+    background-color: white;
+    height: 3px;
+    width: 0;
+    left: 0;
+    bottom: 0px;
+    transition: 0.3s;
+
+  }
+    .lang-0:hover::after{
+      width: 100%;
+    }
+    .lang-1:hover::after {
+      width: 100%;
+    }
+    .lang-2:hover::after {
+      width: 100%;
+    }
+    .lang-3:hover::after {
+      width: 100%;
+    }
+    .lang-4:hover::after {
+      width: 100%;
+    }
+
+    .lang-0:hover,
+  .lang-1:hover,
+  .lang-2:hover,
+  .lang-3:hover{
+    cursor: cell;
+    color: #a0a0a0;
+  }
+
+}
+
+.grph {
+  background-color: red;
+  display: block;
+  width: 500px;
+  height: 600px;
+}
