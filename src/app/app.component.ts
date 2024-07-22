@@ -21,6 +21,7 @@ import { MenuItem } from './menu/menu-item/menu-item';
           (currentItem)="OnItemChange($event)"
           [menuContainer]="menuContainerRef"
         ></app-menu>
+        <app-hero *ngIf="currentItem.id == 0"></app-hero>
         <app-proj
           class="app-proj"
           *ngIf="currentItem.id > 0"

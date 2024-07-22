@@ -8,6 +8,7 @@ import { MenuItemComponent } from './menu/menu-item/menu-item.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ProjComponent } from './proj/proj.component';
 import { ContactComponent } from './contact/contact.component';
+import { HeroComponent } from './hero/hero.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { ContactComponent } from './contact/contact.component';
     NavbarComponent,
     ProjComponent,
     ContactComponent,
+    HeroComponent,
   ],
   imports: [
     BrowserModule,

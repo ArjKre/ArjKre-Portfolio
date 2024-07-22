@@ -55,7 +55,7 @@ export class MenuComponent implements OnInit, AfterViewInit {
         pinnedContainer: this.menuContainer.nativeElement,
         pinSpacing: false,
         scrub: 0.5,
-        markers: true,
+        // markers: true,
         onUpdate: (self) => {
           if(this.isActive == false){
             this.isActive = true;
