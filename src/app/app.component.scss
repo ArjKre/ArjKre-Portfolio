@@ -9,7 +9,7 @@
   position: absolute;
   z-index: 100;
   width: 100%;
-  background-color: rgb(15, 15, 15);
+  background-color: rgb(0, 0, 0);
 }
 
 .wrapper {
@@ -18,7 +18,7 @@
   justify-content: center;
   height: 100vh;
   position: relative;
-  background-color: rgb(15, 15, 15);
+  background-color: rgb(0, 0, 0);
 }
 
 .app-proj {
@@ -41,4 +41,8 @@
   display: block;
   height: 50vh;
   background-color: rgb(15, 15, 15,.9);
+}
+
+.app-hero{
+
 }

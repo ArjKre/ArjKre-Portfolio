@@ -1,18 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  NgZone,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { InitializeGlobe } from './globe/globe';
 
 @Component({
   selector: 'app-hero',
-  template: `
-  <h1>hero works!</h1>
-  <canvas></canvas>
-  `,
-  styleUrls: ['./hero.component.scss']
+  template: ` <div class="globe" #globe></div> `,
+  styleUrls: ['./hero.component.scss'],
 })
 export class HeroComponent implements OnInit {
+  @ViewChild('globe', { static: true }) globeCanvas!: ElementRef<HTMLElement>;
 
-  constructor() { }
+  constructor(private ngZone: NgZone,) {}
 
   ngOnInit(): void {
+    this.ngZone.runOutsideAngular(() => {
+      InitializeGlobe(this.globeCanvas.nativeElement);
+    });
   }
-
 }
