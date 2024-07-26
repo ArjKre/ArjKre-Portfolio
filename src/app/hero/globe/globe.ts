@@ -29,8 +29,6 @@ export function InitializeGlobe(globeCanvas: HTMLElement) {
   }
 
   globe.init(() => {
-    let userLocation = getUserLocation();
-    console.log(userLocation.finally());
     animate();
 
     var constellation = [];
