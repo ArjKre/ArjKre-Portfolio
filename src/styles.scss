@@ -18,3 +18,14 @@ html {
   text-decoration: none;
 }
 
+*body{
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+#encom-globe-canvas{
+  position: relative;
+  z-index: 0;
+  opacity: 0.5;
+}

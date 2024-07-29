@@ -1,27 +1,28 @@
 import * as EncomGlobe from 'encom-globe';
 import { grid } from './grid';
-
-export function InitializeGlobe(globeCanvas: HTMLElement) {
+import { GeolocationData } from './geoloactionData';
+export function InitializeGlobe(globeCanvas: HTMLElement,Data : GeolocationData) {
   const WIDTH = window.innerWidth;
   const HEIGHT = globeCanvas.parentElement!.clientHeight;
   const globe = new EncomGlobe(WIDTH, HEIGHT, {
-    font: 'Inconsolata',
+    font: "Satoshi, sans-serif",
     data: [],
     tiles: grid.tiles,
     baseColor: '#000000',
     markerColor: '#8e44ad',
     pinColor: '#aacfd1',
     satelliteColor: '#aacfd1',
-    scale: 1,
+    scale: 1.2,
     dayLength: 14000,
-    introLinesDuration: 2000,
+    introLinesDuration: 1000,
     maxPins: 500,
     maxMarkers: 4,
-    viewAngle: 0.3,
+    viewAngle: 0.5,
   });
 
   globeCanvas.append(globe.domElement);
   globe.init();
+  assignCanvasId();
 
   function animate() {
     globe.tick();
@@ -29,6 +30,7 @@ export function InitializeGlobe(globeCanvas: HTMLElement) {
   }
 
   globe.init(() => {
+
     animate();
 
     var constellation = [];
@@ -47,9 +49,21 @@ export function InitializeGlobe(globeCanvas: HTMLElement) {
         });
       }
     }
+    let markerOpts = {
+      fontSize: 16,
+    }
 
     globe.addConstellation(constellation, opts);
+    globe.addPin(Data.latitude, Data.longitude,`${Data.ip}`);
+    // globe.addMarker(Data.latitude, Data.longitude,`${Data.ip}`,);
   });
 
+
+  function assignCanvasId() : void {
+    const canvasElement = globeCanvas.querySelector('canvas');
+    if (canvasElement) {
+      canvasElement.id = 'encom-globe-canvas';
+    }
+  }
 
 }
