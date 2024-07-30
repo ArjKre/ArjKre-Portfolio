@@ -61,8 +61,8 @@ export class MenuComponent implements OnInit, AfterViewInit {
             this.isActive = true;
           }
           this.currentIndex = Math.floor(
-            self.progress * (this.menulist.length)
-          );//remove the -1 for the length
+            self.progress * (this.menulist.length - 1)
+          );
           this.OutputItem(this.menulist[this.currentIndex]);
         },
       },

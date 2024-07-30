@@ -21,6 +21,18 @@ html {
 *body{
   &::-webkit-scrollbar {
     display: none;
+    width: 9px;
+    background: black;
+  }
+
+  &::-webkit-scrollbar-track{
+    border-radius: 50px;
+    background: black;
+  }
+
+  &::-webkit-scrollbar-thumb{
+    border-radius: 100px;
+    background: whitesmoke;
   }
 }
 
@@ -29,3 +41,5 @@ html {
   z-index: 0;
   opacity: 0.5;
 }
+
+
