@@ -1,46 +1,11 @@
-.app-menu-container {
-  height: 150vh;
-  position: relative;
-  scroll-behavior: smooth;
-}
-
 .app-navbar {
-  top: 0;
-  position: absolute;
-  z-index: 100;
-  width: 100%;
-  background-color: rgb(0, 0, 0);
-}
-
-.wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  position: relative;
-  background-color: rgb(0, 0, 0);
-}
-
-.app-proj {
-  width: 80vw;
-  height: max-content;
-  color: #ffff;
-  position: relative;
-  z-index: 150;
-}
-
-.app-menu {
-  padding: 0 0 0.75rem 1rem;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: fit-content;
-}
-
-.app-contact {
-  display: block;
-  height: 50vh;
-  background-color: rgb(15, 15, 15,.9);
-}
-
-
+    top: 0;
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+  }
+  
+  .app-hero{
+    position: relative;
+    z-index: 10001;
+  }

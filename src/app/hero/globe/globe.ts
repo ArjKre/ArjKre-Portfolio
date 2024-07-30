@@ -1,11 +1,14 @@
 import * as EncomGlobe from 'encom-globe';
 import { grid } from './grid';
 import { GeolocationData } from './geoloactionData';
-export function InitializeGlobe(globeCanvas: HTMLElement,Data : GeolocationData) {
-  const WIDTH = window.innerWidth;
-  const HEIGHT = globeCanvas.parentElement!.clientHeight;
-  const globe = new EncomGlobe(WIDTH, HEIGHT, {
-    font: "Satoshi, sans-serif",
+export function InitializeGlobe(
+  globeCanvas: HTMLElement,
+  Data: GeolocationData
+) {
+  // let WIDTH = globeCanvas.parentElement?.clientWidth;
+  const ELEMENT = globeCanvas.parentElement!;
+  const globe = new EncomGlobe(window.innerWidth,ELEMENT.clientHeight, {
+    font: 'Satoshi, sans-serif',
     data: [],
     tiles: grid.tiles,
     baseColor: '#000000',
@@ -17,7 +20,9 @@ export function InitializeGlobe(globeCanvas: HTMLElement,Data : GeolocationData)
     introLinesDuration: 1000,
     maxPins: 500,
     maxMarkers: 4,
-    viewAngle: 0.5,
+    viewAngle: 0.3,
+    // scale: 1.2,
+    // viewAngle: 0.1,
   });
 
   globeCanvas.append(globe.domElement);
@@ -30,7 +35,6 @@ export function InitializeGlobe(globeCanvas: HTMLElement,Data : GeolocationData)
   }
 
   globe.init(() => {
-
     animate();
 
     var constellation = [];
@@ -51,19 +55,25 @@ export function InitializeGlobe(globeCanvas: HTMLElement,Data : GeolocationData)
     }
     let markerOpts = {
       fontSize: 16,
-    }
+    };
 
     globe.addConstellation(constellation, opts);
-    globe.addPin(Data.latitude, Data.longitude,`${Data.ip}`);
+    globe.addPin(Data.latitude, Data.longitude, `${Data.ip}`);
     // globe.addMarker(Data.latitude, Data.longitude,`${Data.ip}`,);
   });
 
-
-  function assignCanvasId() : void {
+  function assignCanvasId(): void {
     const canvasElement = globeCanvas.querySelector('canvas');
     if (canvasElement) {
       canvasElement.id = 'encom-globe-canvas';
     }
   }
 
+  window.addEventListener('resize', (val) => {
+    console.log(globeCanvas.parentElement);
+    let h = ELEMENT.clientHeight + ELEMENT.clientTop;
+    // globe.camera.aspect = window.innerWidth / h;
+    globe.camera.updateProjectionMatrix();
+    globe.renderer.setSize(window.innerWidth, h);
+  });
 }

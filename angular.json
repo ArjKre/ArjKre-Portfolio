@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ArjKre": {
+    "ArjKre-Portfolio": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/arj-kre",
+            "outputPath": "dist/arj-kre-portfolio",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -72,10 +72,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "ArjKre:build:production"
+              "browserTarget": "ArjKre-Portfolio:build:production"
             },
             "development": {
-              "browserTarget": "ArjKre:build:development"
+              "browserTarget": "ArjKre-Portfolio:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -83,7 +83,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ArjKre:build"
+            "browserTarget": "ArjKre-Portfolio:build"
           }
         },
         "test": {
@@ -107,5 +107,5 @@
       }
     }
   },
-  "defaultProject": "ArjKre"
+  "defaultProject": "ArjKre-Portfolio"
 }
