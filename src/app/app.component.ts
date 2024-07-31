@@ -1,14 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   template:`
-  <app-navbar class="app-navbar"></app-navbar>
-  <app-hero></app-hero>
+  <app-main class="main">
+  </app-main>
   `,
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+
 
   title = 'ArjKre';
 }

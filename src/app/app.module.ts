@@ -8,12 +8,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { HeroComponent } from './hero/hero.component';
+import { MainComponent } from './main/main.component';
+import { GsapAnimationService } from './service/gsap-animation.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    HeroComponent
+    HeroComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,
@@ -21,7 +24,7 @@ import { HeroComponent } from './hero/hero.component';
     HttpClientModule,
     BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [GsapAnimationService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

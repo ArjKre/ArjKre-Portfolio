@@ -6,10 +6,13 @@ import {
   trigger,
 } from '@angular/animations';
 import {
+  AfterViewInit,
   Component,
   ElementRef,
+  EventEmitter,
   NgZone,
   OnInit,
+  Output,
   ViewChild,
 } from '@angular/core';
 import { GeolocationData } from './globe/geoloactionData';
@@ -18,31 +21,7 @@ import { InitializeGlobe } from './globe/globe';
 
 @Component({
   selector: 'app-hero',
-  template: `
-    <div class="container">
-      <div class="globe" #globe>
-        <div class="txt-hld">
-          <p>
-            Hi, I'm <span class="txt-underline">Arjun Kreshnan</span>, a
-            workaholic front-end dev who loves transforming ideas into stunning
-            experiences 🫰
-          </p>
-          <div
-            class="hld"
-            [@revealAnimation]="isInActive ? 'visible' : 'hidden'"
-          >
-            <span class="proj-scroll-indicator">PROJECTS</span>
-            <!-- <div class="arrow">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div> -->
-            <div class="mouse"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  `,
+  templateUrl: "./hero.component.html",
   styleUrls: ['./hero.component.scss'],
   animations: [
     trigger('revealAnimation', [
@@ -64,7 +43,7 @@ import { InitializeGlobe } from './globe/globe';
     ]),
   ],
 })
-export class HeroComponent implements OnInit {
+export class HeroComponent implements OnInit, AfterViewInit {
   private apiUrl: string = 'https://ipapi.co/json/';
 
   isInActive: boolean = false;
@@ -72,6 +51,10 @@ export class HeroComponent implements OnInit {
   geolocationData!: GeolocationData;
 
   @ViewChild('globe', { static: true }) globeCanvas!: ElementRef<HTMLElement>;
+
+  @ViewChild('heroContainer', { static: true })heroContainer!: ElementRef<HTMLElement>;
+
+  @Output() containerEmit = new EventEmitter<ElementRef<HTMLElement>>();
 
   constructor(private ngZone: NgZone, private http: HttpClient) {}
 
@@ -81,14 +64,22 @@ export class HeroComponent implements OnInit {
     });
     setTimeout(() => {
       this.isInActive = true;
-    }, 3500);
+    }, 4000);
+  }
+
+  ngAfterViewInit(): void {
+    this.containerEmit.emit(this.heroContainer);
   }
 
   FetchingGlobeAndData() {
     this.http.get<GeolocationData>(this.apiUrl).subscribe(
       (data) => {
         this.geolocationData = data;
-        InitializeGlobe(this.globeCanvas.nativeElement, this.geolocationData);
+        InitializeGlobe(
+          this.globeCanvas.nativeElement,
+          this.heroContainer,
+          this.geolocationData
+        );
       },
       (error) => {
         console.log('Error fetching geolocation data', error);

@@ -1,12 +1,11 @@
 import * as EncomGlobe from 'encom-globe';
 import { grid } from './grid';
 import { GeolocationData } from './geoloactionData';
-export function InitializeGlobe(
-  globeCanvas: HTMLElement,
-  Data: GeolocationData
-) {
-  // let WIDTH = globeCanvas.parentElement?.clientWidth;
-  const ELEMENT = globeCanvas.parentElement!;
+import { ElementRef } from '@angular/core';
+
+
+export function InitializeGlobe(globeCanvas: HTMLElement,container : ElementRef<HTMLElement>,Data: GeolocationData) {
+  const ELEMENT = container!.nativeElement;
   const globe = new EncomGlobe(window.innerWidth,ELEMENT.clientHeight, {
     font: 'Satoshi, sans-serif',
     data: [],
@@ -21,8 +20,6 @@ export function InitializeGlobe(
     maxPins: 500,
     maxMarkers: 4,
     viewAngle: 0.3,
-    // scale: 1.2,
-    // viewAngle: 0.1,
   });
 
   globeCanvas.append(globe.domElement);
@@ -72,7 +69,7 @@ export function InitializeGlobe(
   window.addEventListener('resize', (val) => {
     console.log(globeCanvas.parentElement);
     let h = ELEMENT.clientHeight + ELEMENT.clientTop;
-    // globe.camera.aspect = window.innerWidth / h;
+    globe.camera.aspect = window.innerWidth / h;
     globe.camera.updateProjectionMatrix();
     globe.renderer.setSize(window.innerWidth, h);
   });
