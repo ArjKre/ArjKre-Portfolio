@@ -15,13 +15,11 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { GeolocationData } from './globe/geoloactionData';
-import { HttpClient } from '@angular/common/http';
-import { InitializeGlobe } from './globe/globe';
+import { GlobeService } from './globe/globe.service';
 
 @Component({
   selector: 'app-hero',
-  templateUrl: "./hero.component.html",
+  templateUrl: './hero.component.html',
   styleUrls: ['./hero.component.scss'],
   animations: [
     trigger('revealAnimation', [
@@ -44,23 +42,23 @@ import { InitializeGlobe } from './globe/globe';
   ],
 })
 export class HeroComponent implements OnInit, AfterViewInit {
-  private apiUrl: string = 'https://ipapi.co/json/';
-
   isInActive: boolean = false;
 
-  geolocationData!: GeolocationData;
 
   @ViewChild('globe', { static: true }) globeCanvas!: ElementRef<HTMLElement>;
 
-  @ViewChild('heroContainer', { static: true })heroContainer!: ElementRef<HTMLElement>;
+  @ViewChild('heroContainer', { static: true }) heroContainer!: ElementRef<HTMLElement>;
 
   @Output() containerEmit = new EventEmitter<ElementRef<HTMLElement>>();
 
-  constructor(private ngZone: NgZone, private http: HttpClient) {}
+  constructor(private ngZone: NgZone, private globeService: GlobeService) {}
 
   ngOnInit(): void {
     this.ngZone.runOutsideAngular(() => {
-      this.FetchingGlobeAndData();
+      this.globeService.FetchingGlobeAndData(
+        this.globeCanvas.nativeElement,
+        this.heroContainer.nativeElement
+      );
     });
     setTimeout(() => {
       this.isInActive = true;
@@ -69,21 +67,5 @@ export class HeroComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.containerEmit.emit(this.heroContainer);
-  }
-
-  FetchingGlobeAndData() {
-    this.http.get<GeolocationData>(this.apiUrl).subscribe(
-      (data) => {
-        this.geolocationData = data;
-        InitializeGlobe(
-          this.globeCanvas.nativeElement,
-          this.heroContainer,
-          this.geolocationData
-        );
-      },
-      (error) => {
-        console.log('Error fetching geolocation data', error);
-      }
-    );
   }
 }

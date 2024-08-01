@@ -16,7 +16,7 @@ export class MainComponent implements OnInit{
   scrollbarContainer!: ElementRef<HTMLElement>;
 
   
-  @ViewChild('choo', { static: true }) secondSectionContainer!: ElementRef<HTMLElement>;
+  @ViewChild('content', { static: true }) contentContainer!: ElementRef<HTMLElement>;
 
   constructor(private gsapAnimation: GsapAnimationService) {}
 
@@ -24,6 +24,6 @@ export class MainComponent implements OnInit{
 
   accessElement(event: ElementRef) {
     this.scrollbarContainer = event;
-    this.gsapAnimation.scrollInEffect(this.scrollbarContainer.nativeElement,this.secondSectionContainer.nativeElement);
+    this.gsapAnimation.zoomInEffect(this.scrollbarContainer.nativeElement,this.contentContainer.nativeElement);
   }
 }

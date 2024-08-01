@@ -4,8 +4,8 @@ import { GeolocationData } from './geoloactionData';
 import { ElementRef } from '@angular/core';
 
 
-export function InitializeGlobe(globeCanvas: HTMLElement,container : ElementRef<HTMLElement>,Data: GeolocationData) {
-  const ELEMENT = container!.nativeElement;
+export function InitializeGlobe(globeCanvas: HTMLElement,container : HTMLElement,Data: GeolocationData) {
+  const ELEMENT = container;
   const globe = new EncomGlobe(window.innerWidth,ELEMENT.clientHeight, {
     font: 'Satoshi, sans-serif',
     data: [],

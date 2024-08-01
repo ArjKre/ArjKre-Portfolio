@@ -10,13 +10,15 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { HeroComponent } from './hero/hero.component';
 import { MainComponent } from './main/main.component';
 import { GsapAnimationService } from './service/gsap-animation.service';
+import { ContentComponent } from './content/content.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     HeroComponent,
-    MainComponent
+    MainComponent,
+    ContentComponent
   ],
   imports: [
     BrowserModule,
