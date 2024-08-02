@@ -44,22 +44,17 @@ import { GlobeService } from './globe/globe.service';
 export class HeroComponent implements OnInit, AfterViewInit {
   isInActive: boolean = false;
 
-
   @ViewChild('globe', { static: true }) globeCanvas!: ElementRef<HTMLElement>;
 
-  @ViewChild('heroContainer', { static: true }) heroContainer!: ElementRef<HTMLElement>;
+  @ViewChild('heroContainer', { static: true })
+  heroContainer!: ElementRef<HTMLElement>;
 
   @Output() containerEmit = new EventEmitter<ElementRef<HTMLElement>>();
 
-  constructor(private ngZone: NgZone, private globeService: GlobeService) {}
+  constructor(private globeService: GlobeService) {}
 
   ngOnInit(): void {
-    this.ngZone.runOutsideAngular(() => {
-      this.globeService.FetchingGlobeAndData(
-        this.globeCanvas.nativeElement,
-        this.heroContainer.nativeElement
-      );
-    });
+    this.globeService.FetchingGlobeAndData(this.globeCanvas,this.heroContainer);
     setTimeout(() => {
       this.isInActive = true;
     }, 4000);

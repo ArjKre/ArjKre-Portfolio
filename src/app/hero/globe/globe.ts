@@ -1,7 +1,6 @@
 import * as EncomGlobe from 'encom-globe';
 import { grid } from './grid';
 import { GeolocationData } from './geoloactionData';
-import { ElementRef } from '@angular/core';
 
 
 export function InitializeGlobe(globeCanvas: HTMLElement,container : HTMLElement,Data: GeolocationData) {
@@ -67,7 +66,6 @@ export function InitializeGlobe(globeCanvas: HTMLElement,container : HTMLElement
   }
 
   window.addEventListener('resize', (val) => {
-    console.log(globeCanvas.parentElement);
     let h = ELEMENT.clientHeight + ELEMENT.clientTop;
     globe.camera.aspect = window.innerWidth / h;
     globe.camera.updateProjectionMatrix();

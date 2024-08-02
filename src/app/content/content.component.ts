@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ContentService } from './content.service';
 
 @Component({
   selector: 'app-content',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContentComponent implements OnInit {
 
-  constructor() { }
+  @ViewChild('laptop',{static:true}) laptopContainer! : ElementRef<HTMLElement>;
 
+
+  constructor(private service : ContentService) { }
   ngOnInit(): void {
+    this.service.initialize(this.laptopContainer);
   }
 
 }

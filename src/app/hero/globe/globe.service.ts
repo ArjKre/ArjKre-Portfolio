@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { GeolocationData } from './geoloactionData';
 import { InitializeGlobe } from './globe';
-import { Injectable } from '@angular/core';
+import { ElementRef, Injectable, NgZone } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
@@ -11,17 +11,19 @@ export class GlobeService {
 
   private geolocationData!: GeolocationData;
 
-  constructor(private http: HttpClient) {}
+  constructor(private ngZone: NgZone,private http: HttpClient) {}
 
-  FetchingGlobeAndData(globeCanvas: HTMLElement, heroContainer: HTMLElement) {
-    this.http.get<GeolocationData>(this.apiUrl).subscribe(
-      (data) => {
-        this.geolocationData = data;
-        InitializeGlobe(globeCanvas, heroContainer, this.geolocationData);
-      },
-      (error) => {
-        console.error('Error fetching geolocation data', error);
-      }
-    );
+  FetchingGlobeAndData(globeCanvas: ElementRef<HTMLElement>, heroContainer: ElementRef<HTMLElement>) {
+    this.ngZone.runOutsideAngular(()=>{
+      this.http.get<GeolocationData>(this.apiUrl).subscribe(
+        (data) => {
+          this.geolocationData = data;
+          InitializeGlobe(globeCanvas.nativeElement, heroContainer.nativeElement, this.geolocationData);
+        },
+        (error) => {
+          console.error('Error fetching geolocation data', error);
+        }
+      );
+    })
   }
 }
