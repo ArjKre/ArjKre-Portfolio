@@ -10,8 +10,9 @@ export class ContentService {
   private scene!: THREE.Scene;
   private camera!: THREE.PerspectiveCamera;
   private renderer!: THREE.WebGLRenderer;
+  private spotLight!: THREE.Light;
 
-  private readonly LAPTOP_MODEL_FILE: string = '../../assets/models/macbook_pro_13_inch_2020/';
+  private readonly LAPTOP_MODEL_FILE: string = '../../assets/models/asus_rog_flow_x16/';
   private modelLoader: GLTFLoader = new GLTFLoader().setPath(this.LAPTOP_MODEL_FILE);
 
   private mixer!: THREE.AnimationMixer;
@@ -22,7 +23,7 @@ export class ContentService {
 
   constructor(private ngZone: NgZone) {}
 
-  initialize(laptop: ElementRef<HTMLElement>): void {
+  initializeModel(laptop: ElementRef<HTMLElement>): void {
     const WIDTH: number = laptop.nativeElement.clientWidth;
     const HEIGHT: number = laptop.nativeElement.clientHeight;
 
@@ -48,7 +49,7 @@ export class ContentService {
   private setupScene(aspectRatio: number): void {
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 1000);
-    this.camera.position.z = 15;
+    this.camera.position.z = 5.5;
   }
 
   private setupControls(): void {
@@ -66,41 +67,43 @@ export class ContentService {
   }
 
   private onModelLoaded(gltf: GLTF): void {
-    const MESH: THREE.Group = gltf.scene;
-    MESH.position.set(0, 0, 0);
-    MESH.scale.set(35, 35, 35);
-    MESH.receiveShadow = true;
-    MESH.castShadow = true;
+    const mesh: THREE.Group = gltf.scene;
+    mesh.position.set(0, 0, 0);
+    console.log(gltf.animations[0])
+    mesh.scale.set(1, 1, 1);
 
-    this.mixer = new THREE.AnimationMixer(MESH);
-    this.clip = gltf.animations;
-    const trackName = 'Bevels_2.quaternion';
-    const specificTrack = this.clip[0].tracks.find((track: THREE.KeyframeTrack) => track.name === trackName);
+    this.spotLight = new THREE.PointLight(0xffffff, 3.5, 0, 0);
+    this.spotLight.position.set(0, 700, 750);
 
-    if (specificTrack) {
-      const singleTrackClip = new THREE.AnimationClip('clip', 5, [specificTrack]);
-      this.animationAction = this.mixer.clipAction(singleTrackClip);
-      this.animationAction.play();
-    }
+    this.scene.add(this.spotLight,mesh);
 
-    this.scene.add(
-      createPointLight(3.5, 0, 700, 750),
-      // createPointLight(0.05, -300, 100, 100),
-      MESH
-    );
+    this.mixer = new THREE.AnimationMixer(mesh);
+    this.animationAction = this.mixer.clipAction(gltf.animations[0]);
+    this.animationAction.play();
+    this.stopAnimationAfterDelay(0.9);
 
-    // Stop the animation after 2 seconds
-    this.stopAnimationAfterDelay(3.5);
   }
+
+  stopAnimationAt(time: number): void {
+    this.stopTime = time;
+  }
+  
+  // Method to stop animation after a delay (in seconds)
+  private stopAnimationAfterDelay(seconds: number): void {
+    setTimeout(() => {
+      this.stopAnimationAt(seconds);
+    }, seconds * 1000);
+  }
+  
 
   private animate = (): void => {
     requestAnimationFrame(this.animate);
     this.renderer.render(this.scene, this.camera);
-
+    
     if (this.mixer) {
       const delta = this.clock.getDelta();
       const currentTime = this.mixer.time;
-
+      
       if (this.stopTime !== undefined && currentTime >= this.stopTime) {
         this.mixer.setTime(this.stopTime);
       } else {
@@ -108,25 +111,21 @@ export class ContentService {
       }
     }
   };
+  
+  
 
-  // Method to stop animation at a specific keyframe value
-  stopAnimationAt(time: number): void {
-    this.stopTime = time;
-  }
+  // LEGACY CODE 👇 | USED FOR CUTTING UP ANIMATIONS
 
-  // Method to stop animation after a delay (in seconds)
-  private stopAnimationAfterDelay(seconds: number): void {
-    setTimeout(() => {
-      this.stopAnimationAt(seconds);
-    }, seconds * 1000);
-  }
+  // private lidOpeningAnimation = (gltf : GLTF, mesh : THREE.Group,trackName : string) : void =>  {
+  //   this.mixer = new THREE.AnimationMixer(mesh);
+  //   this.clip = gltf.animations;
+  //   const specificTrack = this.clip[0].tracks.find((track: THREE.KeyframeTrack) => track.name === trackName);
+    
+  //   if (specificTrack) {
+  //     const singleTrackClip = new THREE.AnimationClip('clip', 10, [specificTrack]);
+  //     this.animationAction = this.mixer.clipAction(singleTrackClip);
+  //     this.animationAction.play();
+  //   }
+  // }
 }
-
-function createPointLight (intensity: number,x: number,y: number,z: number): THREE.PointLight  {
-  const light = new THREE.PointLight(0xffffff, intensity, 0, 0);
-  light.position.set(x, y, z);
-  light.castShadow = true;
-  // light.shadow.bias = -0.0001;
-  light.shadow.normalBias = 1;
-  return light;
-};
+  

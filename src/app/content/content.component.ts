@@ -13,7 +13,7 @@ export class ContentComponent implements OnInit {
 
   constructor(private service : ContentService) { }
   ngOnInit(): void {
-    this.service.initialize(this.laptopContainer);
+    this.service.initializeModel(this.laptopContainer);
   }
 
 }
