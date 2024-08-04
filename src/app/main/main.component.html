@@ -1,5 +1,9 @@
 <div class="main-container">
-    <app-navbar class="app-navbar"></app-navbar>
-    <app-hero (containerEmit)="accessElement($event)"></app-hero>
-    <app-content class="app-content" #content></app-content>
-  </div>
+  <app-navbar class="app-navbar"></app-navbar>
+  <app-hero (containerEmit)="accessGlobeElement($event)"></app-hero>
+  <app-content
+    class="app-content"
+    (laptopContianerEmit)="accessLaptopElement($event)"
+    #content
+  ></app-content>
+</div>

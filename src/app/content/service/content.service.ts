@@ -1,4 +1,4 @@
-import { ElementRef, Injectable, NgZone } from '@angular/core';
+import { ElementRef, HostListener, Injectable, NgZone } from '@angular/core';
 import * as THREE from 'three';
 import { GLTFLoader, GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
@@ -140,8 +140,9 @@ export class ContentService {
     });
   }
   
-    // private setupControls(): void {
-    //   const controls = new OrbitControls(this.camera, this.renderer.domElement);
-    //   controls.enableZoom = false;
-    // }
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(event: MouseEvent) {
+    this.mouseX = event.clientX - this.windowHalfX;
+    this.mouseY = event.clientY - this.windowHalfY;
+  }
 }
