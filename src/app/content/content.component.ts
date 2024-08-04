@@ -23,10 +23,12 @@ export class ContentComponent implements OnInit{
 
   @Output() laptopContianerEmit = new EventEmitter<ElementRef<HTMLElement>>();
 
-  constructor(private service: ContentService) {}
+  constructor(private service: ContentService) {
+  }
   ngOnInit(): void {
     this.laptopContianerEmit.emit(this.laptopContainer);
     this.service.initializeModel(this.laptopContainer);
+    this.service.assignCanvasId(this.laptopContainer.nativeElement);
   }
 
 

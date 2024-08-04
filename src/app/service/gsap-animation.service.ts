@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ContentService } from '../content/service/content.service';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -8,14 +9,19 @@ gsap.registerPlugin(ScrollTrigger);
   providedIn: 'root',
 })
 export class GsapAnimationService {
-   heroStartElement!: HTMLElement;
-   heroEndElement!: HTMLElement;
-   LaptopElement!: HTMLElement;
+  heroStartElement!: HTMLElement;
+  heroEndElement!: HTMLElement;
+  LaptopElement!: HTMLElement;
 
-  constructor() {
+  private onCompleteOnce : boolean = false;
+
+  constructor(private model: ContentService) {
     ScrollTrigger.defaults({
-      toggleActions: 'restart pause resume pause', // Scoll effect Forward, Leave, Back, Back Leave
-      markers: true, // Easily remove markers for production
+      // toggleActions: 'restart pause resume pause', // Scoll effect Forward, Leave, Back, Back Leave
+      // markers: false
+      markers: {
+        fontSize: '16',
+      },
     });
   }
 
@@ -42,7 +48,7 @@ export class GsapAnimationService {
         scrub: 0.3,
         onLeave:()=>{
           this.laptopInView();
-        }
+        },
       },
     });
 
@@ -57,11 +63,26 @@ export class GsapAnimationService {
         id: 'LAPTOP',
         pin: true,
         start: `40% center`,
-        end: 'bottom bottom',
-        scrub: true,
+        end: '90% 80%',
+        scrub: 0.2,
       },
     });
 
-    laptopInViewTimeLine.fromTo(this.LaptopElement,{translateY: - window.innerHeight,opacity: 0},{translateY: 0,opacity:1},"sameTime");
+    laptopInViewTimeLine
+      .fromTo(
+        this.LaptopElement,
+        { top: 0, opacity: 0 },
+        { top: window.innerHeight - window.outerHeight, opacity: 1 },
+        'sameTime'
+      )
+      .eventCallback('onComplete', () => {
+        if(!this.onCompleteOnce)
+          this.model.modelAnimation();
+          this.onCompleteOnce = true;
+      })
+      .eventCallback('onReverseComplete', () => {
+        this.model.reverseModelAnimation();
+        this.onCompleteOnce = false;
+      });
   }
 }
