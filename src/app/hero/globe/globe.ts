@@ -5,7 +5,7 @@ import { GeolocationData } from './geoloactionData';
 
 export function InitializeGlobe(globeCanvas: HTMLElement,container : HTMLElement,Data: GeolocationData) {
   const ELEMENT = container;
-  const globe = new EncomGlobe(window.innerWidth,ELEMENT.clientHeight, {
+  const globe = new EncomGlobe(ELEMENT.clientWidth,ELEMENT.clientHeight, {
     font: 'Satoshi, sans-serif',
     data: [],
     tiles: grid.tiles,
@@ -66,6 +66,7 @@ export function InitializeGlobe(globeCanvas: HTMLElement,container : HTMLElement
   }
 
   window.addEventListener('resize', (val) => {
+    console.log(ELEMENT.scrollWidth + ELEMENT.offsetWidth);
     let h = ELEMENT.clientHeight + ELEMENT.clientTop;
     globe.camera.aspect = window.innerWidth / h;
     globe.camera.updateProjectionMatrix();

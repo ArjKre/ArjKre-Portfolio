@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ContentService } from '../content/service/content.service';
+import { Model3dService } from '../content/service/model3d.service';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -10,43 +10,43 @@ gsap.registerPlugin(ScrollTrigger);
 })
 export class GsapAnimationService {
   heroStartElement!: HTMLElement;
-  heroEndElement!: HTMLElement;
-  LaptopElement!: HTMLElement;
+  contentContainerElement!: HTMLElement;
+  laptopElement!: HTMLElement;
 
-  private onCompleteOnce : boolean = false;
+  private onCompleteOnce: boolean = false;
 
-  constructor(private model: ContentService) {
+  constructor(private model: Model3dService) {
     ScrollTrigger.defaults({
       // toggleActions: 'restart pause resume pause', // Scoll effect Forward, Leave, Back, Back Leave
-      // markers: false
-      markers: {
-        fontSize: '16',
-      },
+      markers: false
+      // markers: {
+      //   fontSize: '16',
+      // },
     });
   }
 
   initialize(
-    heroStartElement: HTMLElement,
-    heroEndElement: HTMLElement,
-    laptopElement: HTMLElement
+    _heroStartElement: HTMLElement,
+    _contentContainerElement: HTMLElement,
+    _laptopElement: HTMLElement
   ): void {
-    this.heroStartElement = heroStartElement;
-    this.heroEndElement = heroEndElement;
-    this.LaptopElement = laptopElement;
+    this.heroStartElement = _heroStartElement;
+    this.contentContainerElement = _contentContainerElement;
+    this.laptopElement = _laptopElement;
   }
 
-  // zoomInEffect(heroStartElement : HTMLElement,heroEndElement: HTMLElement) {
   zoomInEffect() {
     const zoomInTimeLine = gsap.timeline({
       scrollTrigger: {
         id: 'ZOOM',
         trigger: this.heroStartElement,
         pin: true,
+        pinSpacing: true,
         start: 'top top',
         end: '100% center',
         fastScrollEnd: true,
         scrub: 0.3,
-        onLeave:()=>{
+        onLeave: () => {
           this.laptopInView();
         },
       },
@@ -54,35 +54,43 @@ export class GsapAnimationService {
 
     zoomInTimeLine
       .to(this.heroStartElement, { scale: 5, opacity: 0 }, 'sameTime')
-      .to(this.heroEndElement, {}, 'sameTime');
+      .to(this.contentContainerElement, {}, 'sameTime');
   }
 
   laptopInView() {
+    console.log(this.contentContainerElement.clientHeight);
     const laptopInViewTimeLine = gsap.timeline({
       scrollTrigger: {
         id: 'LAPTOP',
-        pin: true,
         start: `40% center`,
-        end: '90% 80%',
+        end: '90% 90%',
         scrub: 0.2,
       },
     });
 
     laptopInViewTimeLine
       .fromTo(
-        this.LaptopElement,
-        { top: 0, opacity: 0 },
-        { top: window.innerHeight - window.outerHeight, opacity: 1 },
+        this.laptopElement,
+        { opacity: 0,},
+        {  opacity: 1,},
         'sameTime'
       )
       .eventCallback('onComplete', () => {
-        if(!this.onCompleteOnce)
-          this.model.modelAnimation();
-          this.onCompleteOnce = true;
+        if (!this.onCompleteOnce) this.model.modelAnimation();
+        this.onCompleteOnce = true;
       })
       .eventCallback('onReverseComplete', () => {
         this.model.reverseModelAnimation();
         this.onCompleteOnce = false;
       });
+  }
+
+  laptopMovesSideToSide(){
+    const sideToSideTImeLine = gsap.timeline({
+      scrollTrigger: {
+        id: 'SIDE-TO-SIDE',
+        pin: true,
+      }
+    });
   }
 }

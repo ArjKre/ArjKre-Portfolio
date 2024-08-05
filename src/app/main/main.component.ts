@@ -9,27 +9,15 @@ import {
 import { GsapAnimationService } from '../service/gsap-animation.service';
 
 @Component({
-  // templateUrl: './main.component.html',
+  templateUrl: './main.component.html',
   selector: 'app-main',
   styleUrls: ['./main.component.scss'],
-  template: `
-    <div class="main-container">
-      <app-navbar class="app-navbar"></app-navbar>
-      <app-hero (containerEmit)="accessGlobeElement($event)"></app-hero>
-      <app-content
-        class="app-content"
-        (laptopContianerEmit)="accessLaptopElement($event)"
-        #content
-      ></app-content>
-    </div>
-  `,
 })
 export class MainComponent implements AfterViewInit {
   heroContainer!: ElementRef<HTMLElement>;
+  contentContainer!: ElementRef<HTMLElement>;
   laptopCanvas!: ElementRef<HTMLElement>;
 
-  @ViewChild('content', { static: true })
-  contentContainer!: ElementRef<HTMLElement>;
 
   constructor(private gsapAnimation: GsapAnimationService) {}
 
@@ -43,12 +31,13 @@ export class MainComponent implements AfterViewInit {
     }
   }
 
-  async accessGlobeElement(event: ElementRef<HTMLElement>) {
+  accessGlobeElement(event: ElementRef<HTMLElement>) {
     this.gsapAnimation.heroStartElement = event.nativeElement;
     this.gsapAnimation.zoomInEffect();
   }
 
-  accessLaptopElement(event: ElementRef<HTMLElement>) {
-    this.gsapAnimation.LaptopElement = event.nativeElement;
+  accessContentElement(event: {parent: ElementRef<HTMLElement>,child: ElementRef<HTMLElement>}) {
+    this.gsapAnimation.contentContainerElement = event.parent.nativeElement;
+    this.gsapAnimation.laptopElement = event.child.nativeElement;
   }
 }

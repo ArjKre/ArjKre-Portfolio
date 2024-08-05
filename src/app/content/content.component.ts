@@ -8,7 +8,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { ContentService } from './service/content.service';
+import { Model3dService } from './service/model3d.service';
 
 @Component({
   selector: 'app-content',
@@ -20,19 +20,18 @@ export class ContentComponent implements OnInit{
 
   @ViewChild('laptop', { static: true })
   laptopContainer!: ElementRef<HTMLElement>;
+  
+  @ViewChild('contentContainer', { static: true })
+  contentContainer!: ElementRef<HTMLElement>;
 
-  @Output() laptopContianerEmit = new EventEmitter<ElementRef<HTMLElement>>();
+  @Output() ContentComponentEmit = new EventEmitter<{parent: ElementRef<HTMLElement>, child : ElementRef<HTMLElement>}>();
 
-  constructor(private service: ContentService) {
+  constructor(private service: Model3dService) {
   }
   ngOnInit(): void {
-    this.laptopContianerEmit.emit(this.laptopContainer);
+    this.ContentComponentEmit.emit({parent: this.contentContainer,child: this.laptopContainer});
     this.service.initializeModel(this.laptopContainer);
     this.service.assignCanvasId(this.laptopContainer.nativeElement);
   }
-
-
-
-
 
 }

@@ -5,7 +5,7 @@ import { GLTFLoader, GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 @Injectable({
   providedIn: 'root',
 })
-export class ContentService {
+export class Model3dService {
   private scene!: THREE.Scene;
   private camera!: THREE.PerspectiveCamera;
   private renderer!: THREE.WebGLRenderer;
@@ -13,6 +13,7 @@ export class ContentService {
 
   private readonly LAPTOP_MODEL_FILE: string =
     '../../assets/models/asus_rog_flow_x16/';
+
   private modelLoader: GLTFLoader = new GLTFLoader().setPath(
     this.LAPTOP_MODEL_FILE
   );
@@ -69,7 +70,7 @@ export class ContentService {
   private setupScene(aspectRatio: number): void {
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 1000);
-    this.camera.position.z = 6;
+    this.camera.position.z = 7;
   }
 
   private loadModel(): void {
@@ -77,6 +78,7 @@ export class ContentService {
       'scene.gltf',
       (_gltf: GLTF) => {
         this.gltf = _gltf;
+        console.log(this.gltf);
         this.onModelLoaded(this.gltf);
       },
       undefined,
@@ -88,11 +90,20 @@ export class ContentService {
   private onModelLoaded(gltf: GLTF): void {
     this.mesh = gltf.scene;
     this.mesh.position.set(0, -2, 0);
-    this.mesh.scale.set(1.2, 1.2, 1);
+    this.mesh.scale.set(2, 2, 1);
 
-    this.spotLight = new THREE.PointLight(0xffffff, 10, 0, 0);
+
+    // Adjust material properties
+    // this.mesh.traverse((child) => {
+    //   if (child instanceof THREE.Mesh) {
+    //     // child.material.metalness = 0.5; // reduce reflections
+    //     // child.material.roughness = 100; // increase roughness to diffuse reflections
+    //     // child.material.envMapIntensity = 0; // if you have an environment map
+    //   }
+    // });
+
+    this.spotLight = new THREE.PointLight(0xffffff, 8, 0, 0.1);
     this.spotLight.position.set(0, 700, 750);
-
     this.scene.add(this.spotLight, this.mesh);
   }
 
