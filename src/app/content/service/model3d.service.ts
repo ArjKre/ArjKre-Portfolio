@@ -34,6 +34,8 @@ export class Model3dService {
   private windowHalfX = window.innerWidth / 2;
   private windowHalfY = window.innerHeight / 2;
 
+  private onCompleteOnce: boolean = false;
+
   constructor(private ngZone: NgZone) {
     this.CursorTracker();
   }
@@ -45,9 +47,12 @@ export class Model3dService {
     }
   }
 
-  initializeModel(laptop: ElementRef<HTMLElement>): void {
-    const WIDTH: number = laptop.nativeElement.clientWidth;
-    const HEIGHT: number = laptop.nativeElement.clientHeight;
+  initializeModel(
+    laptop: ElementRef<HTMLElement>,
+    parentElement: ElementRef<HTMLElement>
+  ): void {
+    const WIDTH: number = parentElement.nativeElement.clientWidth * 0.8;
+    const HEIGHT: number = parentElement.nativeElement.clientHeight * 0.7;
 
     this.setupRenderer(WIDTH, HEIGHT);
     this.setupScene(WIDTH / HEIGHT);
@@ -78,7 +83,6 @@ export class Model3dService {
       'scene.gltf',
       (_gltf: GLTF) => {
         this.gltf = _gltf;
-        console.log(this.gltf);
         this.onModelLoaded(this.gltf);
       },
       undefined,
@@ -91,16 +95,6 @@ export class Model3dService {
     this.mesh = gltf.scene;
     this.mesh.position.set(0, -2, 0);
     this.mesh.scale.set(2, 2, 1);
-
-
-    // Adjust material properties
-    // this.mesh.traverse((child) => {
-    //   if (child instanceof THREE.Mesh) {
-    //     // child.material.metalness = 0.5; // reduce reflections
-    //     // child.material.roughness = 100; // increase roughness to diffuse reflections
-    //     // child.material.envMapIntensity = 0; // if you have an environment map
-    //   }
-    // });
 
     this.spotLight = new THREE.PointLight(0xffffff, 8, 0, 0.1);
     this.spotLight.position.set(0, 700, 750);
@@ -161,6 +155,29 @@ export class Model3dService {
     document.addEventListener('mousemove', (event) => {
       this.mouseX = event.clientX - this.windowHalfX;
       this.mouseY = event.clientY - this.windowHalfY;
+    });
+  }
+
+  openAnimation() {
+    if (this.onCompleteOnce === false) {
+      this.modelAnimation();
+      this.onCompleteOnce = true;
+    }
+  }
+
+  closeAnimation() {
+    if (this.onCompleteOnce === true) {
+      this.reverseModelAnimation();
+      this.onCompleteOnce = false;
+    }
+  }
+
+  resizeModel(laptop: HTMLElement) {
+    window.addEventListener('resize', (val) => {
+      let h = laptop.clientHeight + laptop.clientTop * 0.8;
+      console.log(window.innerWidth / h);
+      this.camera.updateProjectionMatrix();
+      this.renderer.setSize(window.innerWidth, h);
     });
   }
 }

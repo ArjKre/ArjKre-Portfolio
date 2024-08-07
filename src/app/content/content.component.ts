@@ -9,6 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Model3dService } from './service/model3d.service';
+import { Content, contentList } from './service/content';
 
 @Component({
   selector: 'app-content',
@@ -16,7 +17,7 @@ import { Model3dService } from './service/model3d.service';
   styleUrls: ['./content.component.scss'],
 })
 export class ContentComponent implements OnInit{
-  private intervalId: any;
+  content!: Content
 
   @ViewChild('laptop', { static: true })
   laptopContainer!: ElementRef<HTMLElement>;
@@ -28,10 +29,13 @@ export class ContentComponent implements OnInit{
 
   constructor(private service: Model3dService) {
   }
+
   ngOnInit(): void {
+    this.content = contentList[0];
     this.ContentComponentEmit.emit({parent: this.contentContainer,child: this.laptopContainer});
-    this.service.initializeModel(this.laptopContainer);
+    this.service.initializeModel(this.laptopContainer,this.contentContainer);
     this.service.assignCanvasId(this.laptopContainer.nativeElement);
+    this.service.resizeModel(this.contentContainer.nativeElement);
   }
 
 }

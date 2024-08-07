@@ -10,7 +10,6 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  NgZone,
   OnInit,
   Output,
   ViewChild,

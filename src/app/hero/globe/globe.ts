@@ -66,7 +66,6 @@ export function InitializeGlobe(globeCanvas: HTMLElement,container : HTMLElement
   }
 
   window.addEventListener('resize', (val) => {
-    console.log(ELEMENT.scrollWidth + ELEMENT.offsetWidth);
     let h = ELEMENT.clientHeight + ELEMENT.clientTop;
     globe.camera.aspect = window.innerWidth / h;
     globe.camera.updateProjectionMatrix();
