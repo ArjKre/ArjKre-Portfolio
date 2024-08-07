@@ -9,4 +9,5 @@ TODO
     ☐ Display copyright for the models SO I DON"T GET SUED
 
 FIX-ME
-    ☐ the jitteriness of the laptop model when it reaches end of scroll trigger
+    ☐ the jitteriness of the laptop model between start and end pin.
+    ☐ Try to setup close animation when scrolling back up.

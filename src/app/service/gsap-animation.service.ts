@@ -12,33 +12,49 @@ export class GsapAnimationService {
   heroStartElement!: HTMLElement;
   contentContainerElement!: HTMLElement;
   laptopElement!: HTMLElement;
+  placeHolderDiv!: HTMLElement;
 
-  private onCompleteOnce: boolean = false;
+  private onlyOnce: boolean = false;
 
   constructor(private model: Model3dService) {
     ScrollTrigger.defaults({
       // toggleActions: 'restart pause resume pause', // Scoll effect Forward, Leave, Back, Back Leave
-      markers: false
+      // markers: false
       // markers: {
-      //   fontSize: '16',
+      //   fontSize: '16px',
       // },
     });
   }
+  private value!: number;
 
   initialize(
     _heroStartElement: HTMLElement,
     _contentContainerElement: HTMLElement,
-    _laptopElement: HTMLElement
+    _laptopElement: HTMLElement,
+    _placeHolderDiv: HTMLElement
   ): void {
     this.heroStartElement = _heroStartElement;
     this.contentContainerElement = _contentContainerElement;
     this.laptopElement = _laptopElement;
+    this.placeHolderDiv = _placeHolderDiv;
+  }
+
+  runAnimation() {
+    this.value =
+      (this.laptopElement.offsetTop +
+        this.heroStartElement.clientHeight +
+        this.heroStartElement.offsetTop) /
+      2;
+    this.value += this.placeHolderDiv.offsetTop;
+    this.zoomInEffect();
+    this.laptopInView();
+
   }
 
   zoomInEffect() {
     const zoomInTimeLine = gsap.timeline({
       scrollTrigger: {
-        id: 'ZOOM',
+        id: 'GLOBE-ZOOM',
         trigger: this.heroStartElement,
         pin: true,
         pinSpacing: true,
@@ -46,51 +62,54 @@ export class GsapAnimationService {
         end: '100% center',
         fastScrollEnd: true,
         scrub: 0.3,
-        onLeave: () => {
-          this.laptopInView();
-        },
       },
     });
 
     zoomInTimeLine
-      .to(this.heroStartElement, { scale: 5, opacity: 0 }, 'sameTime')
+      .to(this.heroStartElement, { scale: 5, opacity: 0 })
       .to(this.contentContainerElement, {}, 'sameTime');
   }
 
   laptopInView() {
-    console.log(this.contentContainerElement.clientHeight);
-    const laptopInViewTimeLine = gsap.timeline({
+    const laptopAnimatedToCenter = gsap.timeline({
       scrollTrigger: {
+        markers: {
+          indent: 300,
+        },
         id: 'LAPTOP',
-        start: `40% center`,
-        end: '90% 90%',
-        scrub: 0.2,
+        start: '40% center',
+        end: '+=0',
+        scrub: 1,
       },
     });
 
-    laptopInViewTimeLine
-      .fromTo(
-        this.laptopElement,
-        { opacity: 0,},
-        {  opacity: 1,},
-        'sameTime'
-      )
-      .eventCallback('onComplete', () => {
-        if (!this.onCompleteOnce) this.model.modelAnimation();
-        this.onCompleteOnce = true;
-      })
-      .eventCallback('onReverseComplete', () => {
-        this.model.reverseModelAnimation();
-        this.onCompleteOnce = false;
-      });
-  }
+    gsap.set(this.laptopElement, { opacity: 0 });
 
-  laptopMovesSideToSide(){
-    const sideToSideTImeLine = gsap.timeline({
-      scrollTrigger: {
-        id: 'SIDE-TO-SIDE',
-        pin: true,
-      }
+    laptopAnimatedToCenter.to(this.laptopElement, {
+      opacity: 1,
+      y: -this.value,
+      onComplete: () => {
+        if (!this.onlyOnce) {
+          ScrollTrigger.create({
+            id: 'PINNED',
+            trigger: this.laptopElement,
+            markers: true,
+            start: `+=60% center`,
+            end: '+=25%',
+            scrub: 1,
+            pin: true,
+            pinSpacing: false,
+            onEnter: () => {
+              this.model.openAnimation();
+              // Ensure the element stays at its final transformed position
+              // gsap.set(this.laptopElement, {});
+            },
+          });
+          this.onlyOnce = true;
+        }
+      },
+    }).eventCallback('onReverseComplete',()=>{
+      this.model.closeAnimation();
     });
   }
 }

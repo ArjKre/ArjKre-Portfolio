@@ -2,6 +2,7 @@
   overflow-x: hidden;
   overflow-y:hidden ;
   background-color: var(--main-color);
+  position: relative;
   scroll-behavior: smooth;
 }
 
@@ -15,5 +16,15 @@
 .app-content{
   position: relative;
   z-index: 1001;
+}
+
+.center{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  height: 50px;
+  width: 50px;
+  // outline: 1px dashed red;
+  z-index: -3000;
 }
 
