@@ -1,0 +1,17 @@
+.projects-container {
+  height: 150vh;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transform: translateY(-70vh);
+  //   outline: 1px solid red;
+}
+
+.laptop-container {
+  position: absolute;
+  z-index: 100;
+//   outline: 1px solid green;
+}

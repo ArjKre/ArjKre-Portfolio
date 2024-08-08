@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Model3dService } from '../content/service/model3d.service';
+import { Model3dService } from '../projects/service/model3d.service';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -10,106 +10,144 @@ gsap.registerPlugin(ScrollTrigger);
 })
 export class GsapAnimationService {
   heroStartElement!: HTMLElement;
-  contentContainerElement!: HTMLElement;
+  projectContainer!: HTMLElement;
   laptopElement!: HTMLElement;
-  placeHolderDiv!: HTMLElement;
-
-  private onlyOnce: boolean = false;
+  hasTriggered = false; 
 
   constructor(private model: Model3dService) {
     ScrollTrigger.defaults({
-      // toggleActions: 'restart pause resume pause', // Scoll effect Forward, Leave, Back, Back Leave
-      // markers: false
-      // markers: {
-      //   fontSize: '16px',
-      // },
+
+      // Scoll effect Forward, Leave, Back, Back Leave
+      // toggleActions: 'restart pause resume pause', 
+
     });
   }
   private value!: number;
 
   initialize(
     _heroStartElement: HTMLElement,
-    _contentContainerElement: HTMLElement,
+    _projectContainer: HTMLElement,
     _laptopElement: HTMLElement,
-    _placeHolderDiv: HTMLElement
   ): void {
     this.heroStartElement = _heroStartElement;
-    this.contentContainerElement = _contentContainerElement;
+    this.projectContainer = _projectContainer;
     this.laptopElement = _laptopElement;
-    this.placeHolderDiv = _placeHolderDiv;
   }
 
   runAnimation() {
-    this.value =
-      (this.laptopElement.offsetTop +
-        this.heroStartElement.clientHeight +
-        this.heroStartElement.offsetTop) /
-      2;
-    this.value += this.placeHolderDiv.offsetTop;
+    // this.customScrollbar();
+    this.value = (this.laptopElement.offsetHeight + this.laptopElement.clientHeight) -(window.innerHeight/2) * 2;
     this.zoomInEffect();
-    this.laptopInView();
+    this.LaptopAnimation();
 
   }
 
   zoomInEffect() {
-    const zoomInTimeLine = gsap.timeline({
+    const globeZoomInTimeLine = gsap.timeline({
       scrollTrigger: {
         id: 'GLOBE-ZOOM',
+        // markers:true,
         trigger: this.heroStartElement,
         pin: true,
         pinSpacing: true,
         start: 'top top',
-        end: '100% center',
+        end: 'center top',
         fastScrollEnd: true,
-        scrub: 0.3,
+        scrub: true,
       },
     });
 
-    zoomInTimeLine
+    globeZoomInTimeLine
       .to(this.heroStartElement, { scale: 5, opacity: 0 })
-      .to(this.contentContainerElement, {}, 'sameTime');
+      .to(this.projectContainer, {},'samTime');
   }
 
-  laptopInView() {
-    const laptopAnimatedToCenter = gsap.timeline({
+
+  LaptopAnimation() {
+    let tl1End: number ; // Initialize the end position
+  
+    const tl1 = gsap.timeline({
       scrollTrigger: {
-        markers: {
-          indent: 300,
+        id: 'PIN',
+        trigger: this.projectContainer,
+        // markers: true,
+        pin: true,
+        pinSpacing: false,
+        start: 'top center',
+        end: '+=400',
+        scrub: 0.3,
+        onUpdate: (self) => {
+          if (self.progress > 0.5 && !this.hasTriggered) {
+            this.hasTriggered = true;
+            this.model.openLidAnimation();
+          }
+          
+          if (self.progress <= 0.5 && this.hasTriggered) {
+            this.hasTriggered = false;
+            this.model.closeLidAnimation();
+          }
         },
-        id: 'LAPTOP',
-        start: '40% center',
-        end: '+=0',
-        scrub: 1,
-      },
-    });
-
-    gsap.set(this.laptopElement, { opacity: 0 });
-
-    laptopAnimatedToCenter.to(this.laptopElement, {
-      opacity: 1,
-      y: -this.value,
-      onComplete: () => {
-        if (!this.onlyOnce) {
-          ScrollTrigger.create({
-            id: 'PINNED',
-            trigger: this.laptopElement,
-            markers: true,
-            start: `+=60% center`,
-            end: '+=25%',
-            scrub: 1,
-            pin: true,
-            pinSpacing: false,
-            onEnter: () => {
-              this.model.openAnimation();
-              // Ensure the element stays at its final transformed position
-              // gsap.set(this.laptopElement, {});
-            },
-          });
-          this.onlyOnce = true;
+        onRefresh: (self) => {
+          tl1End = self.end;
+          initializeTl2(); 
         }
-      },
-    }).eventCallback('onReverseComplete',()=>{
-      this.model.closeAnimation();
+      }
     });
+  
+    gsap.set(this.laptopElement, { opacity: 1, scale: 0 });
+  
+    tl1.to(this.laptopElement, { y: -this.value, x: 0, opacity: 1, scale: 1 });
+  
+    const initializeTl2 = ()=> {
+      gsap.timeline({
+        scrollTrigger: {
+          id: 'MOVE',
+          trigger: this.projectContainer,
+          // markers: true,
+          start: `top+=100 center`, 
+          end: 'top top', 
+          scrub: 1
+        }
+      }).fromTo(this.laptopElement,
+        { y: -this.value, x: 0 }, 
+        { y: 0, x: 400 } 
+      );
+    }
+
+    const tl3 = gsap.timeline({
+      scrollTrigger: {
+        id: 'LFT-TO-RGHT',
+        // markers: {
+        //   indent: 300
+        // },
+        trigger: this.projectContainer,
+        start: 'top+=10% top',
+        end:'bottom bottom',
+        pin: true,
+        scrub: 2,
+      }
+    })
+
+    tl3.to(this.laptopElement, {});
+    tl3.to(this.laptopElement, {});
+    tl3.to(this.laptopElement, {});
+
   }
+  
+  // customScrollbar(){
+  //   gsap.from(this.scrollbarElement, {
+  //     scaleY: 0,
+  //     transformOrigin: "top top",
+  //     ease: "none",
+  //     scrollTrigger: {
+  //       start: 0,
+  //       end: "max",
+  //       markers: true,
+  //       scrub: true
+  //     }
+  //   });
+  // }
+  
+
+
 }

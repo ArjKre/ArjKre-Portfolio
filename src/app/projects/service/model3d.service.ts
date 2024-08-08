@@ -12,7 +12,7 @@ export class Model3dService {
   private spotLight!: THREE.Light;
 
   private readonly LAPTOP_MODEL_FILE: string =
-    '../../assets/models/asus_rog_flow_x16/';
+    '../../../assets/models/asus_rog_flow_x16/';
 
   private modelLoader: GLTFLoader = new GLTFLoader().setPath(
     this.LAPTOP_MODEL_FILE
@@ -34,8 +34,6 @@ export class Model3dService {
   private windowHalfX = window.innerWidth / 2;
   private windowHalfY = window.innerHeight / 2;
 
-  private onCompleteOnce: boolean = false;
-
   constructor(private ngZone: NgZone) {
     this.CursorTracker();
   }
@@ -48,11 +46,12 @@ export class Model3dService {
   }
 
   initializeModel(
-    laptop: ElementRef<HTMLElement>,
-    parentElement: ElementRef<HTMLElement>
+    parentElement: ElementRef<HTMLElement>,
+    laptop: ElementRef<HTMLElement>
   ): void {
-    const WIDTH: number = parentElement.nativeElement.clientWidth * 0.8;
-    const HEIGHT: number = parentElement.nativeElement.clientHeight * 0.7;
+    const WIDTH: number = window.innerWidth;
+    const HEIGHT: number = window.innerHeight * 0.85;
+    // const HEIGHT: number = (parentElement.nativeElement.clientHeight/2) * .7;
 
     this.setupRenderer(WIDTH, HEIGHT);
     this.setupScene(WIDTH / HEIGHT);
@@ -82,8 +81,7 @@ export class Model3dService {
     this.modelLoader.load(
       'scene.gltf',
       (_gltf: GLTF) => {
-        this.gltf = _gltf;
-        this.onModelLoaded(this.gltf);
+        this.onModelLoaded(_gltf);
       },
       undefined,
       (error) =>
@@ -92,6 +90,7 @@ export class Model3dService {
   }
 
   private onModelLoaded(gltf: GLTF): void {
+    this.gltf = gltf;
     this.mesh = gltf.scene;
     this.mesh.position.set(0, -2, 0);
     this.mesh.scale.set(2, 2, 1);
@@ -99,19 +98,33 @@ export class Model3dService {
     this.spotLight = new THREE.PointLight(0xffffff, 8, 0, 0.1);
     this.spotLight.position.set(0, 700, 750);
     this.scene.add(this.spotLight, this.mesh);
+
+    // this.modelAnimation(this.gltf);
   }
 
   //Method to run the model animation
-  modelAnimation() {
-    this.mixer = new THREE.AnimationMixer(this.mesh);
-    this.animationAction = this.mixer.clipAction(this.gltf.animations[0]);
-    this.animationAction.play();
-    this.stopAnimationAfterDelay(0.9);
+  modelAnimation(gltf: GLTF) {
+    try {
+      if (gltf.animations && gltf.animations.length > 0) {
+        this.mixer = new THREE.AnimationMixer(this.mesh);
+        this.animationAction = this.mixer.clipAction(gltf.animations[0]);
+        this.animationAction.play();
+        this.stopAnimationAfterDelay(0.9);
+      } else {
+        console.warn('No animations found in the loaded GLTF model.');
+      }
+    } catch (error) {
+      return;
+    }
   }
 
   reverseModelAnimation() {
-    this.animationAction.timeScale = -1.1;
-    this.animationAction.play();
+    try {
+      this.animationAction.timeScale = -1.1;
+      this.animationAction.play();
+    } catch (error) {
+      return;
+    }
   }
 
   private stopAnimationAfterDelay(seconds: number): void {
@@ -158,24 +171,17 @@ export class Model3dService {
     });
   }
 
-  openAnimation() {
-    if (this.onCompleteOnce === false) {
-      this.modelAnimation();
-      this.onCompleteOnce = true;
-    }
+  openLidAnimation() {
+    this.modelAnimation(this.gltf);
   }
 
-  closeAnimation() {
-    if (this.onCompleteOnce === true) {
-      this.reverseModelAnimation();
-      this.onCompleteOnce = false;
-    }
+  closeLidAnimation() {
+    this.reverseModelAnimation();
   }
 
   resizeModel(laptop: HTMLElement) {
     window.addEventListener('resize', (val) => {
       let h = laptop.clientHeight + laptop.clientTop * 0.8;
-      console.log(window.innerWidth / h);
       this.camera.updateProjectionMatrix();
       this.renderer.setSize(window.innerWidth, h);
     });

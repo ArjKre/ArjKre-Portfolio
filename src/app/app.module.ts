@@ -10,8 +10,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { HeroComponent } from './hero/hero.component';
 import { MainComponent } from './main/main.component';
 import { GsapAnimationService } from './service/gsap-animation.service';
-import { ContentComponent } from './content/content.component';
-import { SlideComponent } from './content/slide/slide.component';
+import { SlideComponent } from './projects/slide/slide.component';
+import { ProjectsComponent } from './projects/projects.component';
 
 @NgModule({
   declarations: [
@@ -19,8 +19,8 @@ import { SlideComponent } from './content/slide/slide.component';
     NavbarComponent,
     HeroComponent,
     MainComponent,
-    ContentComponent,
-    SlideComponent
+    SlideComponent,
+    ProjectsComponent
   ],
   imports: [
     BrowserModule,

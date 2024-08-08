@@ -13,37 +13,33 @@ import { GsapAnimationService } from '../service/gsap-animation.service';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit, AfterViewInit {
-  heroContainer!: ElementRef<HTMLElement>;
-  contentContainer!: ElementRef<HTMLElement>;
-  laptopCanvas!: ElementRef<HTMLElement>;
+  heroContainer?: ElementRef<HTMLElement>;
+  projectContainer?: ElementRef<HTMLElement>;
+  laptopCanvas?: ElementRef<HTMLElement>;
 
-  @ViewChild('centerdiv',{static: true}) placeHolderCenterDiv! : ElementRef<HTMLElement>;
 
   constructor(private gsapAnimation: GsapAnimationService) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
-    if (this.heroContainer && this.contentContainer && this.laptopCanvas) {
+    if (this.heroContainer && this.projectContainer && this.laptopCanvas) {
       this.gsapAnimation.initialize(
         this.heroContainer.nativeElement,
-        this.contentContainer.nativeElement,
+        this.projectContainer.nativeElement,
         this.laptopCanvas.nativeElement,
-        this.placeHolderCenterDiv.nativeElement,
       );
     }
     this.gsapAnimation.runAnimation();
   }
-  
+
   accessGlobeElement(event: ElementRef<HTMLElement>) {
     this.gsapAnimation.heroStartElement = event.nativeElement;
-
   }
 
-  accessContentElement(event: {parent: ElementRef<HTMLElement>;child: ElementRef<HTMLElement>;}) {
-    this.gsapAnimation.contentContainerElement = event.parent.nativeElement;
+  accessProjectsElement(event:{parent: ElementRef<HTMLElement>; child: ElementRef<HTMLElement>;}) {
+    this.gsapAnimation.projectContainer = event.parent.nativeElement
     this.gsapAnimation.laptopElement = event.child.nativeElement;
-    this.gsapAnimation.placeHolderDiv = this.placeHolderCenterDiv.nativeElement;
   }
+
 }

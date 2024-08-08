@@ -11,6 +11,7 @@
 
 html {
   font-size: 62.5%; //To make the root element font size to 10px. So 1rem = 10px;
+  scroll-behavior: smooth;
 }
 
 * {
@@ -20,14 +21,18 @@ html {
   text-decoration: none;
 }
 
-// *body{
-//   &::-webkit-scrollbar {
-//     display: none;
-//   }
-// }
+*body{
+  //  &::-webkit-scrollbar {
+  //    display: none;
+  //  }
+}
 
 #encom-globe-canvas {
   position: relative;
   z-index: 0;
   opacity: 0.5;
+}
+
+#laptop-canvas{
+  // outline: 1px solid blue;
 }

@@ -6,8 +6,11 @@ TODO
     ☐ Take Screenshots of the projects to display on the modbile model
     ☐ Contact button goes start to contact
     ☐ About Section like "https://nelson.co/about" when navbar link is clicked on
+    ☐ Implement Contact Section
+    ☐ Implement a LOADING PAGE
     ☐ Display copyright for the models SO I DON"T GET SUED
 
 FIX-ME
-    ☐ the jitteriness of the laptop model between start and end pin.
+    ✔ the jitteriness of the laptop model between start and end pin. @done(24-08-09 01:31)
+            ✔ > wait for the pinn to load before letting the user be able to scroll. @done(24-08-09 01:31)
     ☐ Try to setup close animation when scrolling back up.
