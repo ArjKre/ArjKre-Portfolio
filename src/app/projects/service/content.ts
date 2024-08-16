@@ -11,17 +11,17 @@ export interface Content {
 export let contentList: Content[] = [
   {
     id: 0,
-    title: 'Govt Up School North Vazhakulam',
-    subtitle: 'Client Side Website For Schools',
-    tech:['Html', 'CSS', 'JavaScript'],
-    para:`The UP School North Vazhakulam webpage showcases the school's vibrant community, academic excellence, and extracurricular activities. It features an attractive layout with high-quality images, responsive design, and interactive elements like photo galleries. The site provides detailed information for prospective students and parents about the faculty, facilities, and contact details.`,
-  },
-  {
-    id: 1,
     title: 'McDonald Desktop Application',
     subtitle: 'A concept McDonald desktop application',
     tech: ['C#', 'WPF', '.Net', 'Microsoft SQL Server'],
     para:`A concept McDonald's desktop application, created with Microsoft SQL Server as the backend, was my first project. Users can log in or create an account, order meals, and enjoy an immersive UI reflecting McDonald's motif. This project combines robust functionality with an engaging user experience, serving as an excellent introduction to application development.`,
+  },
+  {
+    id: 1,
+    title: 'Govt Up School North Vazhakulam',
+    subtitle: 'Client Side Website For Schools',
+    tech:['Html', 'CSS', 'JavaScript'],
+    para:`The UP School North Vazhakulam webpage showcases the school's vibrant community, academic excellence, and extracurricular activities. It features an attractive layout with high-quality images, responsive design, and interactive elements like photo galleries. The site provides detailed information for prospective students and parents about the faculty, facilities, and contact details.`,
   },
   {
     id: 2,

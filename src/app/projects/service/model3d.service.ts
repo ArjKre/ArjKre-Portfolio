@@ -49,7 +49,7 @@ export class Model3dService {
     parentElement: ElementRef<HTMLElement>,
     laptop: ElementRef<HTMLElement>
   ): void {
-    const WIDTH: number = window.innerWidth;
+    const WIDTH: number = window.innerWidth * 0.8;
     const HEIGHT: number = window.innerHeight * 0.85;
     // const HEIGHT: number = (parentElement.nativeElement.clientHeight/2) * .7;
 
@@ -61,6 +61,7 @@ export class Model3dService {
     this.loadModel();
 
     this.ngZone.runOutsideAngular(() => this.animate());
+
   }
 
   private setupRenderer(width: number, height: number): void {
@@ -100,6 +101,8 @@ export class Model3dService {
     this.scene.add(this.spotLight, this.mesh);
 
     // this.modelAnimation(this.gltf);
+
+    
   }
 
   //Method to run the model animation
@@ -179,11 +182,10 @@ export class Model3dService {
     this.reverseModelAnimation();
   }
 
-  resizeModel(laptop: HTMLElement) {
-    window.addEventListener('resize', (val) => {
-      let h = laptop.clientHeight + laptop.clientTop * 0.8;
-      this.camera.updateProjectionMatrix();
-      this.renderer.setSize(window.innerWidth, h);
-    });
+  resizeModel() {
+    let h  = window.innerHeight * 0.85;
+    this.camera.aspect = window.innerWidth / h;
+    this.camera.updateProjectionMatrix();
+    this.renderer.setSize(window.innerWidth, h);
   }
 }

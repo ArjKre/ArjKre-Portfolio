@@ -7,11 +7,40 @@
   justify-content: center;
   position: relative;
   transform: translateY(-70vh);
-  //   outline: 1px solid red;
+  outline: 1px solid red;
 }
 
 .laptop-container {
   position: absolute;
   z-index: 100;
-//   outline: 1px solid green;
+  max-height: 860.2px;
+  // outline: 1px solid green;
+}
+
+.slide-container {
+  padding-inline: 236px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 1rem;
+  position: relative;
+  // outline: 1px solid grey;
+}
+
+.app-slide{
+  position: relative;
+}
+
+.lft {
+  position: absolute;
+  margin-inline: 236px;
+  width: 40%;
+  // outline: 1px solid red;
+}
+
+.rght {
+  position: absolute;
+  right: 0%;
+  margin-right: 207px;
+  width: 40%;
+  // outline: 1px solid green;
 }

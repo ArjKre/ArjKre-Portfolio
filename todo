@@ -1,7 +1,7 @@
 TODO
-    ☐ Laptop Model moves left to right
-    ☐ Content displayed on the opposite side of the laptop
+    ✔ Laptop Model moves left to right @done(24-08-16 13:30)
     ☐ Takes Screenshots of the projects to display on the laptop
+    ☐ Content displayed on the opposite side of the laptop
     ☐ switch from laptop model to mobile model
     ☐ Take Screenshots of the projects to display on the modbile model
     ☐ Contact button goes start to contact
@@ -14,3 +14,4 @@ FIX-ME
     ✔ the jitteriness of the laptop model between start and end pin. @done(24-08-09 01:31)
             ✔ > wait for the pinn to load before letting the user be able to scroll. @done(24-08-09 01:31)
     ☐ Try to setup close animation when scrolling back up.
+    ☐ When the page loads for the first time the model looks wonkey.

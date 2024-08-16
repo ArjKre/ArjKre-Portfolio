@@ -1,6 +1,6 @@
 
 .con-txt {
-  margin: 0px 236px 0px 236px;;
+  // margin: 0px 236px 0px 236px;
   max-width: fit-content;
   // outline: 1px dashed #ff0000;
 }
@@ -21,7 +21,7 @@
 .para {
   padding-top: 1.5rem;
   text-wrap: pretty;
-  width: 50%;
+  // width: 50%;
 }
 
 .para,
@@ -31,7 +31,7 @@
 }
 
 .tech {
-  width: max-content;
+  // width: max-content;
   display: flex;
   gap: 2.5rem;
   padding-top: 1rem;
@@ -40,7 +40,7 @@
 .tech-txt {
   position: relative;
   cursor: pointer;
-  z-index: 1000;
+  // z-index: 1;
 }
 
 .lang-0::after,
