@@ -3,19 +3,19 @@ import * as THREE from 'three';
 import { GLTFLoader, GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class Model3dService {
+export class Phone3dService {
   private scene!: THREE.Scene;
   private camera!: THREE.PerspectiveCamera;
   private renderer!: THREE.WebGLRenderer;
   private spotLight!: THREE.Light;
 
-  private readonly LAPTOP_MODEL_FILE: string =
-    '../../../assets/models/asus_rog_flow_x16/';
+  private readonly PHONE_MODEL_FILE: string =
+    '../../../assets/models/google-pixel-7pro/';
 
   private modelLoader: GLTFLoader = new GLTFLoader().setPath(
-    this.LAPTOP_MODEL_FILE
+    this.PHONE_MODEL_FILE
   );
 
   private gltf!: GLTF;
@@ -41,21 +41,19 @@ export class Model3dService {
   assignCanvasId(parentElement: HTMLElement): void {
     const canvasElement = parentElement.querySelector('canvas');
     if (canvasElement) {
-      canvasElement.id = 'laptop-canvas';
+      canvasElement.id = 'phone-canvas';
     }
   }
 
-  initializeModel(
-    laptop: ElementRef<HTMLElement>
-  ): void {
-    const WIDTH: number = window.innerWidth * 0.8;
+  initializeModel(phone: ElementRef<HTMLElement>,parentElement?: ElementRef<HTMLElement>,): void {
+    const WIDTH: number = window.innerWidth * 0.2;
     const HEIGHT: number = window.innerHeight * 0.85;
     // const HEIGHT: number = (parentElement.nativeElement.clientHeight/2) * .7;
 
     this.setupRenderer(WIDTH, HEIGHT);
     this.setupScene(WIDTH / HEIGHT);
 
-    laptop.nativeElement.appendChild(this.renderer.domElement);
+    phone.nativeElement.appendChild(this.renderer.domElement);
 
     this.loadModel();
 
@@ -74,7 +72,8 @@ export class Model3dService {
   private setupScene(aspectRatio: number): void {
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 1000);
-    this.camera.position.z = 7;
+    // this.camera.position.z = 7;
+    this.camera.position.z = 1;
   }
 
   private loadModel(): void {
@@ -92,13 +91,16 @@ export class Model3dService {
   private onModelLoaded(gltf: GLTF): void {
     this.gltf = gltf;
     this.mesh = gltf.scene;
-    this.mesh.position.set(0, -2, 0);
-    this.mesh.scale.set(2, 2, 1);
+    this.mesh.position.set(0, -0.5, 0);
+    this.mesh.scale.set(5, 5, 5);
 
     this.spotLight = new THREE.PointLight(0xffffff, 8, 0, 0.1);
     this.spotLight.position.set(0, 700, 750);
     this.scene.add(this.spotLight, this.mesh);
 
+    // this.modelAnimation(this.gltf);
+
+    
   }
 
   //Method to run the model animation
