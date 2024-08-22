@@ -1,24 +1,35 @@
-<div class="projects-container" #projectsContainer>
-  <div class="laptop-container" #laptop></div>
-  <div class="slide-container">
-    <ng-container *ngFor="let _content of content; let idx = index">
-      <ng-container *ngIf="idx < 2">
-        <app-slide #appslide class="app-slide" [_currentContent]="_content"></app-slide>
-      </ng-container>
-
-      <!-- Block for idx > 2 (ngClass applied based on odd/even) -->
-      <ng-container *ngIf="idx >= 2">
-        <app-slide
-        #appslide
+<div class="scrollbar">
+  <div class="projects-container" #projectsContainer>
+    <div class="laptop-container" #laptop>
+      <!-- <div class="image"></div> -->
+    </div>
+    <div class="phone-container" #phone>
+      <!-- <div class="image"></div> -->
+    </div>
+    <div class="slide-container">
+      <ng-container *ngFor="let _content of content; let idx = index">
+        <ng-container *ngIf="idx < 2">
+          <app-slide
+          #appslide
+          class="app-slide"
+          [_currentContent]="_content"
+          ></app-slide>
+        </ng-container>
+        
+        <!-- Block for idx > 2 (ngClass applied based on odd/even) -->
+        <ng-container *ngIf="idx >= 2">
+          <app-slide
+          #appslide
           class="app-slide"
           style="position: absolute; top: 0"
           [_currentContent]="_content"
           [ngClass]="{
-            lft: idx % 2 !== 0,
-            rght: idx % 2 === 0
+            lft: idx % 2 === 0 && idx != content.length - 1,
+            rght: idx % 2 !== 0 || idx == content.length - 1
           }"
-        ></app-slide>
+          ></app-slide>
+        </ng-container>
       </ng-container>
-    </ng-container>
+    </div>
   </div>
 </div>

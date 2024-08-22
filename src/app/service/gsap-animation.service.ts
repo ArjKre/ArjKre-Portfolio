@@ -21,7 +21,9 @@ export class GsapAnimationService {
       // toggleActions: 'restart pause resume pause',
     });
   }
-  private value!: number;
+  private aValue!: number; //Don't know what this dose but without it the globe layout get's messed up!
+  private laptopPinPositionXAxis!: number;
+  private laptopPinPositionYAxis! : number
 
   initialize(
     _heroStartElement: HTMLElement,
@@ -37,10 +39,9 @@ export class GsapAnimationService {
 
   runAnimation() {
     try {
-      this.value =
-        this.laptopElement.offsetHeight +
-        this.laptopElement.clientHeight -
-        (window.innerHeight / 2) * 2;
+      this.aValue = this.laptopElement.offsetHeight + this.laptopElement.clientHeight - (window.innerHeight / 2) * 2;
+      this.laptopPinPositionYAxis = window.innerHeight/2;
+      this.laptopPinPositionXAxis = window.innerWidth / 2 / 2;
       this.zoomInEffect();
       this.LaptopAnimation();
     } catch (error) {
@@ -67,7 +68,7 @@ export class GsapAnimationService {
 
     globeZoomInTimeLine
       .to(this.heroStartElement, { scale: 5, opacity: 0 })
-      .to(this.projectContainer, {}, 'samTime');
+      .to(this.projectContainer, {});
   }
 
   LaptopAnimation() {
@@ -99,6 +100,7 @@ export class GsapAnimationService {
       },
     });
 
+    // gsap.set(this.phoneElement,{opacity: 0, translateX: -this.value, zIndex: 0});
     gsap.set(this.laptopElement, { opacity: 0, scale: 0 });
 
     this.slidesElement.forEach((slide) => {
@@ -107,12 +109,12 @@ export class GsapAnimationService {
 
     tl1
       .to(this.laptopElement, {
-        y: -this.value,
+        y: - this.laptopPinPositionYAxis,
         translateX: 0,
         opacity: 1,
         scale: 1,
       })
-      .to(this.laptopElement, { y: -this.value, translateX: 0, pin: false });
+      .to(this.laptopElement, { y: -this.laptopPinPositionYAxis, translateX: 0});
 
     const tl2 = gsap.timeline({
       scrollTrigger: {
@@ -130,77 +132,78 @@ export class GsapAnimationService {
 
     tl2.fromTo(
       this.laptopElement,
-      { y: -this.value, translateX: 0 },
-      { y: 0, translateX: 0 }
+      { y: -this.laptopPinPositionYAxis, translateX: 0 },
+      { y: 0, translateX: 0 },
     );
 
     const tl3 = gsap.timeline({
       scrollTrigger: {
         id: 'tl3',
-        // markers: {
-        //   indent: 750,
-        // },
+        markers: {
+          indent: 750,
+        },
         trigger: this.projectContainer,
-        start: 'top+=10% top',
-        // end: 'max',
-        end: 'bottom center',
+        start: 'top top',
+        end: 'max',
         pin: true,
         scrub: 1,
-        anticipatePin: 1,
         invalidateOnRefresh: true,
       },
     });
 
-    // CENTER - LEFT 
-    // UP
-    tl3
-      .fromTo(this.laptopElement, { translateX: 0 }, { translateX: -414.018})
-      this.txtAnimation(tl3,1);
 
-    // RIGHT - LEFT
+    // CENTER - LEFT 
+    // Govt School
+    tl3
+    .fromTo(this.laptopElement, { translateX: 0 }, { translateX: -this.laptopPinPositionXAxis})
+    this.txtAnimation(tl3,1);
+    
+    // LEFT - RIGHT
     // MC D's
     tl3
-    .fromTo(this.laptopElement,{translateX:-414.018},{translateX: 414.018})
+    .fromTo(this.laptopElement,{translateX:-this.laptopPinPositionXAxis},{translateX: this.laptopPinPositionXAxis})
     .to(this.slidesElement[1].nativeElement,{zIndex: 0,opacity: 0,},'-=0.5')
     this.txtAnimation(tl3,0);
-
-    // LEFT - RIGHT
+    
+    // RIGHT - LEFT
     //  95R
     tl3
-    .fromTo(this.laptopElement,{translateX:414.018},{translateX: -414.018,})
+    .fromTo(this.laptopElement,{translateX:this.laptopPinPositionXAxis},{translateX: -this.laptopPinPositionXAxis,})
     .to(this.slidesElement[0].nativeElement,{zIndex: 0,opacity: 0,},'-=0.5')
-    this.txtAnimation(tl3,2);
-
-    // RIGHT - LEFT
+    this.txtAnimation(tl3,3);
+    
+    // LEFT - RIGHT
     // BlckDrp
     tl3
-    .fromTo(this.laptopElement,{translateX:-414.018},{translateX: 414.018,})
-    .to(this.slidesElement[2].nativeElement,{zIndex: 0,opacity: 0,},'-=0.5')
-    this.txtAnimation(tl3,3);
-
+    .fromTo(this.laptopElement,{translateX:-this.laptopPinPositionXAxis},{translateX: this.laptopPinPositionXAxis,})
+    .to(this.slidesElement[3].nativeElement,{zIndex: 0,opacity: 0,},'-=0.5')
+    this.txtAnimation(tl3,2);
+    
     // LEFT - RIGHT
     // GAME HUB
     tl3
-    .fromTo(this.laptopElement,{translateX: 414.018},{translateX: -414.018,})
-    .to(this.slidesElement[3].nativeElement,{zIndex: 0,opacity: 0,},'-=0.5')
+    .fromTo(this.laptopElement,{translateX: this.laptopPinPositionXAxis},{translateX: -this.laptopPinPositionXAxis,})
+    .to(this.slidesElement[2].nativeElement,{zIndex: 0,opacity: 0,},'-=0.5')
     this.txtAnimation(tl3,4);
-      
-  }
 
+    
+  }
 
   txtAnimation(timeline: gsap.core.Timeline, idx: number) {
     return timeline.to(
       this.slidesElement[idx].nativeElement,
-      { opacity: 1, onUpdate: () => {
-          const opacity = gsap.getProperty(this.slidesElement[idx].nativeElement,'opacity') as number;
-          this.slidesElement[idx].nativeElement.style.zIndex = opacity > 0.9 ? '100' : '1';
+      {
+        opacity: 1,
+        onUpdate: () => {
+          const opacity = gsap.getProperty(
+            this.slidesElement[idx].nativeElement,
+            'opacity'
+          ) as number;
+          this.slidesElement[idx].nativeElement.style.zIndex =
+            opacity > 0.9 ? '100' : '1';
         },
       },
       '-=0.5'
     );
   }
 }
-
-
-
-

@@ -39,7 +39,6 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.modelService.initializeModel(
-      this.projectContainer,
       this.laptopContainer
     );
     this.modelService.assignCanvasId(this.laptopContainer.nativeElement);
