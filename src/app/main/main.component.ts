@@ -16,6 +16,7 @@ export class MainComponent implements AfterViewInit{
   heroContainer?: HTMLElement;
   projectContainer?: HTMLElement;
   laptopCanvas?: HTMLElement;
+  phoneCanvas?: HTMLElement;
   slidesElement?: ElementRef<HTMLElement>[];
 
   constructor(private gsapAnimation: GsapAnimationService) {}
@@ -34,10 +35,12 @@ export class MainComponent implements AfterViewInit{
   accessProjectsElement(event: {
     projectContainer: ElementRef<HTMLElement>;
     laptop: ElementRef<HTMLElement>;
+    phone: ElementRef<HTMLElement>;
     slides:QueryList<ElementRef<HTMLElement>>;
   }) {
     this.projectContainer = event.projectContainer.nativeElement;
     this.laptopCanvas = event.laptop.nativeElement;
+    this.phoneCanvas = event.phone.nativeElement;
     this.slidesElement = event.slides.toArray();
     
   }
@@ -47,6 +50,7 @@ export class MainComponent implements AfterViewInit{
       this.heroContainer!,
       this.projectContainer!,
       this.laptopCanvas!,
+      this.phoneCanvas!,
       this.slidesElement!,
     );
     this.gsapAnimation.runAnimation();

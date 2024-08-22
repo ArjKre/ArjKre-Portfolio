@@ -92,7 +92,7 @@ export class Phone3dService {
     this.gltf = gltf;
     this.mesh = gltf.scene;
     this.mesh.position.set(0, -0.5, 0);
-    this.mesh.scale.set(5, 5, 5);
+    this.mesh.scale.set(6, 6, 6);
 
     this.spotLight = new THREE.PointLight(0xffffff, 8, 0, 0.1);
     this.spotLight.position.set(0, 700, 750);
