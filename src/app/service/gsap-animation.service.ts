@@ -48,7 +48,7 @@ export class GsapAnimationService {
     try {
       this.aValue = this.laptopElement.offsetHeight + this.laptopElement.clientHeight - (window.innerHeight / 2) * 2;
       this.modelPinPositionYAxis = window.innerHeight/2;
-      this.modelPinPositionXAxis = window.innerWidth / 2 / 2;
+      this.modelPinPositionXAxis = (window.innerWidth / 2) / 2;
       this.zoomInEffect();
       this.ModelAnimation();
     } catch (error) {
@@ -154,12 +154,13 @@ export class GsapAnimationService {
     const tl3 = gsap.timeline({
       scrollTrigger: {
         id: 'tl3',
-        markers: true,
+        // markers: true,
         trigger: this.projectContainer,
         start: 'top top',
         // end: 'max',
         end: 'bottom',
         pin: true,
+        anticipatePin: 1,
         scrub: 1,
         invalidateOnRefresh: true,
         onEnter:()=>{
@@ -199,8 +200,8 @@ export class GsapAnimationService {
     // LEFT - RIGHT
     // BlckDrp
     tl3
-    .fromTo(this.laptopElement,{translateX:-this.modelPinPositionXAxis,opacity:1},{translateX: this.modelPinPositionXAxis,opacity:0})
     .to(this.slidesElement[3].nativeElement,{zIndex: 0,opacity: 0,})
+    .fromTo(this.laptopElement,{translateX:-this.modelPinPositionXAxis,opacity:1},{translateX: this.modelPinPositionXAxis,opacity:0})
     .fromTo(this.phoneElement,{translateX:-this.modelPinPositionXAxis,opacity: 0},{translateX: this.modelPinPositionXAxis,opacity: 1})
     this.txtAnimation(tl3,2);
     
