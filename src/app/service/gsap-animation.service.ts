@@ -1,7 +1,7 @@
 import { ElementRef, Injectable } from '@angular/core';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Model3dService } from '../projects/service/model3d.service';
+import { Model3dService } from '../main/projects/service/model3d.service';
 
 gsap.registerPlugin(ScrollTrigger);
 
