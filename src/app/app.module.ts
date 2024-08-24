@@ -12,6 +12,7 @@ import { MainComponent } from './main/main.component';
 import { GsapAnimationService } from './service/gsap-animation.service';
 import { SlideComponent } from './projects/slide/slide.component';
 import { ProjectsComponent } from './projects/projects.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ProjectsComponent } from './projects/projects.component';
     HeroComponent,
     MainComponent,
     SlideComponent,
-    ProjectsComponent
+    ProjectsComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,38 @@
+<div class="footer-container" #futContainer>
+  <div class="email-carousel">
+    <div class="carousel-track" [ngClass]="{ paused: isPaused }">
+      <div class="carousel-slide">
+        <a
+          class="email" [ngClass]="{'email-paused': isPaused}"
+          href=""
+          (mouseenter)="pauseAnimation()"
+          (mouseleave)="resumeAnimation()"
+          >{{ email }}</a
+        >
+      </div>
+      <div class="carousel-slide">
+        <a
+          class="email" [ngClass]="{'email-paused': isPaused}"
+          href=""
+          (mouseenter)="pauseAnimation()"
+          (mouseleave)="resumeAnimation()"
+          >{{ email }}</a
+        >
+      </div>
+
+      <div class="carousel-slide">
+        <a
+          class="email" [ngClass]="{'email-paused': isPaused}"
+          href=""
+          (mouseenter)="pauseAnimation()"
+          (mouseleave)="resumeAnimation()"
+          >{{ email }}</a
+        >
+      </div>
+    </div>
+  </div>
+  <div class="personal-info">
+    <div class="left"></div>
+    <div class="right"></div>
+  </div>
+</div>

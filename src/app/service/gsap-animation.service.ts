@@ -14,6 +14,8 @@ export class GsapAnimationService {
   laptopElement!: HTMLElement;
   phoneElement!: HTMLElement;
   slidesElement!: ElementRef<HTMLElement>[];
+  footerElement!: HTMLElement;
+
   hasTriggered = false;
 
   constructor(private model: Model3dService) {
@@ -31,13 +33,15 @@ export class GsapAnimationService {
     _projectContainer: HTMLElement,
     _laptopElement: HTMLElement,
     _phoneElement: HTMLElement,
-    _slidesElement: ElementRef<HTMLElement>[]
+    _slidesElement: ElementRef<HTMLElement>[],
+    _footerElement: HTMLElement
   ): void {
     this.heroStartElement = _heroStartElement;
     this.projectContainer = _projectContainer;
     this.laptopElement = _laptopElement;
     this.phoneElement = _phoneElement;
     this.slidesElement = _slidesElement;
+    this.footerElement = _footerElement;
   }
 
   runAnimation() {
@@ -53,6 +57,10 @@ export class GsapAnimationService {
   }
 
   zoomInEffect() {
+
+    //Hide the footer from showing
+    gsap.set(this.footerElement,{opacity: 0});
+
     const globeZoomInTimeLine = gsap.timeline({
       scrollTrigger: {
         id: 'globe',
@@ -106,13 +114,14 @@ export class GsapAnimationService {
     //Phone Model Invisible
     gsap.set(this.phoneElement,{opacity: 0, translateX : -this.modelPinPositionXAxis})
 
-    // gsap.set(this.phoneElement,{opacity: 0, translateX: -this.value, zIndex: 0});
+    //Laptop Model Reveal
     gsap.set(this.laptopElement, { opacity: 0, scale: 0 });
 
     this.slidesElement.forEach((slide) => {
       gsap.set(slide.nativeElement, { opacity: 0 });
     });
 
+    //Model Slides from top to the center
     tl1
       .to(this.laptopElement, {
         y: - this.modelPinPositionYAxis,
@@ -145,15 +154,21 @@ export class GsapAnimationService {
     const tl3 = gsap.timeline({
       scrollTrigger: {
         id: 'tl3',
-        // markers: {
-        //   indent: 750,
-        // },
+        markers: true,
         trigger: this.projectContainer,
         start: 'top top',
-        end: 'max',
+        // end: 'max',
+        end: 'bottom',
         pin: true,
         scrub: 1,
         invalidateOnRefresh: true,
+        onEnter:()=>{
+          gsap.set(this.footerElement,{opacity: 1})
+        },
+        onLeaveBack:()=>{
+          gsap.set(this.footerElement,{opacity: 0})
+          
+        }
       },
     });
 

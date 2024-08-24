@@ -1,10 +1,4 @@
-import {
-  AfterContentInit,
-  AfterViewInit,
-  Component,
-  ElementRef,
-  QueryList,
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, QueryList } from '@angular/core';
 import { GsapAnimationService } from '../service/gsap-animation.service';
 
 @Component({
@@ -12,19 +6,21 @@ import { GsapAnimationService } from '../service/gsap-animation.service';
   selector: 'app-main',
   styleUrls: ['./main.component.scss'],
 })
-export class MainComponent implements AfterViewInit{
+export class MainComponent implements AfterViewInit {
   heroContainer?: HTMLElement;
   projectContainer?: HTMLElement;
   laptopCanvas?: HTMLElement;
   phoneCanvas?: HTMLElement;
   slidesElement?: ElementRef<HTMLElement>[];
+  FooterElement? : HTMLElement;
 
-  constructor(private gsapAnimation: GsapAnimationService) {}
+  footerHeight: number = 0;
+
+  constructor(private gsapAnimation: GsapAnimationService, private cd: ChangeDetectorRef) {}
 
   ngAfterViewInit(): void {
     this.checkAndInitialize();
   }
-
 
   accessGlobeElement(event: ElementRef<HTMLElement>) {
     this.heroContainer = event.nativeElement;
@@ -36,13 +32,12 @@ export class MainComponent implements AfterViewInit{
     projectContainer: ElementRef<HTMLElement>;
     laptop: ElementRef<HTMLElement>;
     phone: ElementRef<HTMLElement>;
-    slides:QueryList<ElementRef<HTMLElement>>;
+    slides: QueryList<ElementRef<HTMLElement>>;
   }) {
     this.projectContainer = event.projectContainer.nativeElement;
     this.laptopCanvas = event.laptop.nativeElement;
     this.phoneCanvas = event.phone.nativeElement;
     this.slidesElement = event.slides.toArray();
-    
   }
 
   checkAndInitialize() {
@@ -52,7 +47,14 @@ export class MainComponent implements AfterViewInit{
       this.laptopCanvas!,
       this.phoneCanvas!,
       this.slidesElement!,
+      this.FooterElement!,
     );
     this.gsapAnimation.runAnimation();
+  }
+
+  accessFooterHeight(event: HTMLElement) {
+    this.FooterElement = event;
+    this.footerHeight = event.clientHeight;
+    this.cd.detectChanges();
   }
 }

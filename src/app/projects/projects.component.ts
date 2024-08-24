@@ -3,9 +3,12 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  Input,
+  OnChanges,
   OnInit,
   Output,
   QueryList,
+  SimpleChanges,
   ViewChild,
   ViewChildren,
 } from '@angular/core';
@@ -18,7 +21,7 @@ import { Phone3dService } from './service/phone3d.service';
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.scss'],
 })
-export class ProjectsComponent implements OnInit, AfterViewInit {
+export class ProjectsComponent implements OnInit, AfterViewInit, OnChanges{
   content: Content[] = contentList;
 
   @ViewChild('projectsContainer', { static: true })
@@ -32,6 +35,11 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 
   @ViewChildren('appslide', { read: ElementRef })
   slides!: QueryList<ElementRef<HTMLElement>>;
+
+  @ViewChild('footerholder', { static: true })
+  holder!: ElementRef<HTMLElement>;
+
+  @Input() footerElement! : number;
 
   @Output() ProjectsComponentEmit = new EventEmitter<{
     projectContainer: ElementRef<HTMLElement>;
@@ -47,9 +55,15 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
     this.LaptopService.assignCanvasId(this.laptopContainer.nativeElement);
 
     this.phoneService.initializeModel(this.phoneContainer);
-
+    this.phoneService.assignCanvasId(this.phoneContainer.nativeElement);
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+      if (changes['footerElement']) {
+        this.holder.nativeElement.style.height = `${this.footerElement}px`;
+      }
+  }
+  
   ngAfterViewInit(): void {
     this.ProjectsComponentEmit.emit({
       projectContainer: this.projectContainer,
@@ -58,4 +72,6 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
       slides: this.slides,
     });
   }
+
+
 }

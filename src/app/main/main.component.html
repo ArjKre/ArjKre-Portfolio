@@ -1,9 +1,16 @@
 <div class="main-container">
   <app-navbar class="app-navbar"></app-navbar>
-  <app-hero (containerEmit)="accessGlobeElement($event)"></app-hero>
+  <app-hero
+    class="app-hero"
+    (containerEmit)="accessGlobeElement($event)"
+  ></app-hero>
   <app-projects
     class="app-projects"
-    (ProjectsComponentEmit)="accessProjectsElement($event)"
-  ></app-projects>
+    [footerElement]="footerHeight"
+    (ProjectsComponentEmit)="accessProjectsElement($event)">
+  </app-projects>
+  <app-footer
+    class="app-footer"
+    (footerHeightEmitter)="accessFooterHeight($event)">
+  </app-footer>
 </div>
-

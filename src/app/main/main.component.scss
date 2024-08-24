@@ -12,10 +12,13 @@
   width: 100%;
 }
 
-.contact{
-  display: block;
-  outline: 1px solid blue;
-  height: 300px;
-  width: 100%;
+.app-hero{
+  position: relative;
+  z-index: 1;
 }
 
+.app-footer{
+  position: fixed;
+  bottom: 0;
+  z-index: 1;
+}
