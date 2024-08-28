@@ -3,8 +3,9 @@
     <div class="carousel-track" [ngClass]="{ paused: isPaused }">
       <div class="carousel-slide">
         <a
-          class="email" [ngClass]="{'email-paused': isPaused}"
-          href=""
+          class="email"
+          [href]="emailLink"
+          [ngClass]="{ 'email-paused': isPaused }"
           (mouseenter)="pauseAnimation()"
           (mouseleave)="resumeAnimation()"
           >{{ email }}</a
@@ -12,27 +13,67 @@
       </div>
       <div class="carousel-slide">
         <a
-          class="email" [ngClass]="{'email-paused': isPaused}"
-          href=""
+          class="email"
+          [href]="emailLink"
+          [ngClass]="{ 'email-paused': isPaused }"
           (mouseenter)="pauseAnimation()"
           (mouseleave)="resumeAnimation()"
           >{{ email }}</a
         >
       </div>
 
-      <div class="carousel-slide">
+    </div>
+  </div>
+  <div class="lower-section">
+    <div class="hr-container">
+      <hr class="line lft" />
+      <div class="beating-heart">
+        <img src="../../../assets/svg/heart.svg" />
+      </div>
+      <hr class="line rght" />
+    </div>
+    <div class="personal-info">
+      <div class="left">
+        <p>Designed and engineered by Arjun Kreshnan C M</p>
+        <div class="info">
+          <p>Build with</p>
+          <a
+            href="https://angular.dev/"
+            target="_blank"
+            title="Angular"
+            (mouseover)="angularMouseOver()"
+            (mouseleave)="angularMouseLeave()"
+            #angLink
+          >
+            <img src="../../../assets/svg/angualar-icon.svg" />
+          </a>
+        </div>
+      </div>
+      <div class="right">
         <a
-          class="email" [ngClass]="{'email-paused': isPaused}"
-          href=""
-          (mouseenter)="pauseAnimation()"
-          (mouseleave)="resumeAnimation()"
-          >{{ email }}</a
+          class="linkedin-icon"
+          href="https://linkedin.com/in/arjkre"
+          target="_blank"
+          title="linkedin/ArjKre"
+          (mouseover)="linkedinMouseOver()"
+          (mouseleave)="linkedinMouseLeave()"
+          #linkedinLink
         >
+          <img src="../../../assets/svg/linkedin-icon.svg" />
+        </a>
+        <a
+          class="github-icon"
+          href="https://github.com/ArjKre"
+          target="_blank"
+          title="github.com/ArjKre"
+          (mouseover)="githubMouseOver()"
+          (mouseleave)="githubMouseLeave()"
+          #gitLink
+        >
+          <img src="../../../assets/svg/github-icon.svg" />
+        </a>
       </div>
     </div>
   </div>
-  <div class="personal-info">
-    <div class="left"></div>
-    <div class="right"></div>
-  </div>
+  <p class="Copyright">Copyright ️️© Arjun Kreshnan 2024</p>
 </div>
