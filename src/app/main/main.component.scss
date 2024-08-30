@@ -1,8 +1,8 @@
 .main-container {
+  position: relative;
+  background-color: var(--main-color);
   overflow-x: hidden;
   overflow-y: hidden;
-  background-color: var(--main-color);
-  position: relative;
 }
 
 .app-navbar {
@@ -10,11 +10,23 @@
   position: fixed;
   z-index: 100;
   width: 100%;
+  background-color: transparent;
+  transition: top 1.5s ease-in-out;
 }
 
 .app-hero{
   position: relative;
   z-index: 1;
+}
+
+.app-about{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh !important;
+  background-color: var(--main-color);
+
 }
 
 .app-footer{
@@ -23,4 +35,12 @@
   left: 0;
   right: 0;
   z-index: 1;
+}
+
+.aboutClicked{
+  display: none;
+}
+
+.aboutClickedNavbar{
+  top: -100px;
 }

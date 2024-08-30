@@ -35,29 +35,5 @@ export class FooterComponent implements AfterViewInit {
     this.isPaused = false;
   }
 
-  angularMouseOver(){
-    this.angularLink.nativeElement.style.filter = 'grayscale(0)';
-    this.angularLink.nativeElement.style.opacity = '1';
-  }
 
-  angularMouseLeave(){
-    this.angularLink.nativeElement.style.filter = 'grayscale(0.3)';
-    this.angularLink.nativeElement.style.opacity = '0.5';
-  }
-
-  githubMouseOver(){
-    this.githubLink.nativeElement.style.opacity = '1';
-  }
-
-  githubMouseLeave(){
-    this.githubLink.nativeElement.style.opacity = '0.5';
-  }
-
-  linkedinMouseOver(){
-    this.linkedinLink.nativeElement.style.opacity = '1';
-  }
-
-  linkedinMouseLeave(){
-    this.linkedinLink.nativeElement.style.opacity = '0.5';
-  }
 }

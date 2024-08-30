@@ -1,16 +1,31 @@
 <div class="main-container">
-  <app-navbar class="app-navbar"></app-navbar>
-  <app-hero
-    class="app-hero"
+  <app-navbar class="app-navbar"
+    [ngClass]="{ 'aboutClickedNavbar': isAboutClicked }"
+    (abtBtnClick)="navbarAboutClicked($event)"
+  ></app-navbar>
+
+  <app-hero class="app-hero"
+    [ngClass]="{ 'aboutClicked': isAboutClicked }"
     (containerEmit)="accessGlobeElement($event)"
-  ></app-hero>
-  <app-projects
-    class="app-projects"
+  >
+  </app-hero>
+
+  <app-about class="app-about"
+  (backBtn)="onBackBtnClicked($event)" 
+  *ngIf="isAboutClicked">
+  </app-about>
+
+  <app-projects class="app-projects"
+    [ngClass]="{ 'aboutClicked': isAboutClicked }"
     [footerElement]="footerHeight"
-    (ProjectsComponentEmit)="accessProjectsElement($event)">
+    (ProjectsComponentEmit)="accessProjectsElement($event)"
+  >
   </app-projects>
-  <app-footer
-    class="app-footer"
-    (footerHeightEmitter)="accessFooterHeight($event)">
+
+  <app-footer class="app-footer"
+    [ngClass]="{ 'aboutClicked': isAboutClicked }"
+    (footerHeightEmitter)="accessFooterHeight($event)"
+  >
   </app-footer>
+
 </div>

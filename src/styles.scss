@@ -36,3 +36,39 @@ html {
 #laptop-canvas{
   // outline: 1px solid blue;
 }
+
+.delay-100ms {
+  animation-delay: 100ms !important;
+}
+
+.delay-200ms {
+  animation-delay: 200ms !important;
+}
+
+.delay-300ms {
+  animation-delay: 300ms !important;
+}
+
+.delay-400ms {
+  animation-delay: 400ms !important;
+}
+
+.delay-500ms {
+  animation-delay: 500ms !important ;
+}
+
+/* Ensure animations will use the animation-delay */
+.animate-reveal {
+  opacity: 0;
+  transform: translateY(1.2rem);
+  filter: blur(6px);
+  animation: revealAnimation 500ms ease-out forwards;
+}
+
+@keyframes revealAnimation {
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0px);
+  }
+}

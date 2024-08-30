@@ -163,14 +163,19 @@
     a {
       cursor: pointer;
       opacity: 0.5;
-      filter: grayscale(0.3);
-      transition: filter 0.3s;
+      transition: 0.3s opacity ease-out;
+      // filter: grayscale(0.3);
+
+      &:hover{
+        opacity: 1;
+      }
     }
 
     img {
       height: 6rem;
     }
   }
+
 }
 
 .right {
@@ -182,18 +187,25 @@
 
   .linkedin-icon {
     opacity: 0.5;
-    transition: opacity 0.3s;
+    transition: 0.3s opacity ease-out;
     img {
       height: 3.5rem;
+    }
+    &:hover{
+      opacity: 1;
     }
   }
 
   .github-icon {
     opacity: 0.5;
-    transition: opacity 0.3s;
+    transition: 0.3s opacity ease-out;
 
     img {
       height: 3.5rem;
+    }
+
+    &:hover{
+      opacity: 1;
     }
   }
 }

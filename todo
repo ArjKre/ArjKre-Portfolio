@@ -5,7 +5,7 @@ TODO
     ✔ switch from laptop model to mobile model @done(24-08-23 12:43)
     ☐ Take Screenshots of the projects to display on the modbile model
     ✔ Contact button goes start to contact @done(24-08-24 14:18)
-    ☐ About Section like "https://nelson.co/about" when navbar link is clicked on
+    ✔ About Section like "https://nelson.co/about" when navbar link is clicked on @started(24-08-29 14:16) @done(24-08-30 15:43) @lasted(1d1h27m51s)
     ✔ Implement Contact Section @started(24-08-24 14:12) @done(24-08-29 02:27) @lasted(4d12h15m3s)
     ☐ Implement a LOADING PAGE
     ☐ Display copyright for the models SO I DON"T GET SUED

@@ -14,6 +14,8 @@ export class MainComponent implements AfterViewInit {
   slidesElement?: ElementRef<HTMLElement>[];
   FooterElement? : HTMLElement;
 
+  isAboutClicked : boolean = false
+
   footerHeight: number = 0;
 
   constructor(private gsapAnimation: GsapAnimationService, private cd: ChangeDetectorRef) {}
@@ -56,5 +58,13 @@ export class MainComponent implements AfterViewInit {
     this.FooterElement = event;
     this.footerHeight = event.clientHeight;
     this.cd.detectChanges();
+  }
+
+  navbarAboutClicked(event : boolean){
+    this.isAboutClicked = event;
+  }
+
+  onBackBtnClicked(event : boolean){
+    this.isAboutClicked = !event;
   }
 }
