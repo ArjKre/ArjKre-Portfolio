@@ -26,7 +26,7 @@ import { GlobeService } from './globe/globe.service';
         'hidden',
         style({
           opacity: 0,
-          transform: 'translateY(-100%)',
+          transform: 'translateY(100%)',
         })
       ),
       state(
@@ -56,7 +56,7 @@ export class HeroComponent implements OnInit, AfterViewInit {
     this.globeService.FetchingGlobeAndData(this.globeCanvas,this.heroContainer);
     setTimeout(() => {
       this.isInActive = true;
-    }, 4000);
+    }, 2500);
   }
 
   ngAfterViewInit(): void {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-navbar',
@@ -10,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
         </div>
       </a>
       <div class="link-container underline-transition">
-        <span class="abt-link ">About</span>
+        <span class="abt-link" (click)="aboutClick()">About</span>
         <span class="contact-link" (click)="contactClick()">Contact Us</span>
       </div>
     </div>
@@ -20,6 +20,10 @@ import { Component, OnInit } from '@angular/core';
 export class NavbarComponent implements OnInit {
 
   imagePath! : string;
+
+  isabtBtnClick : boolean = false;
+
+  @Output() abtBtnClick = new EventEmitter();
 
   constructor() {}
 
@@ -32,5 +36,9 @@ export class NavbarComponent implements OnInit {
       top: document.body.scrollHeight,
       behavior: 'smooth',
     });
+  }
+
+  aboutClick(){
+    this.abtBtnClick.emit(!this.isabtBtnClick);
   }
 }
