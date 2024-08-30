@@ -8,7 +8,7 @@ TODO
     ✔ About Section like "https://nelson.co/about" when navbar link is clicked on @started(24-08-29 14:16) @done(24-08-30 15:43) @lasted(1d1h27m51s)
     ✔ Implement Contact Section @started(24-08-24 14:12) @done(24-08-29 02:27) @lasted(4d12h15m3s)
     ☐ Implement a LOADING PAGE
-    ☐ Display copyright for the models SO I DON"T GET SUED
+    ✔ Display copyright for the models SO I DON"T GET SUED
     ☐ Setup Resize function for all the models
 
 FIX-ME
