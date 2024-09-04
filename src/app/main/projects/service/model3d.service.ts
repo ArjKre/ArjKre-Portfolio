@@ -8,11 +8,12 @@ import { GLTFLoader, GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 export class Model3dService {
   private scene!: THREE.Scene;
   private camera!: THREE.PerspectiveCamera;
-  private renderer!: THREE.WebGLRenderer;
   private spotLight!: THREE.Light;
 
+  private LaptopRenderer!: THREE.WebGLRenderer;
+
   private readonly LAPTOP_MODEL_FILE: string =
-    '../../../assets/models/asus_rog_flow_x16/';
+    '../../../../assets/models/asus_rog_strix_scar_17/';
 
   private modelLoader: GLTFLoader = new GLTFLoader().setPath(
     this.LAPTOP_MODEL_FILE
@@ -34,41 +35,45 @@ export class Model3dService {
   private windowHalfX = window.innerWidth / 2;
   private windowHalfY = window.innerHeight / 2;
 
+  SCREEN_MESH?: THREE.Object3D<THREE.Object3DEventMap>;
+
   constructor(private ngZone: NgZone) {
     this.CursorTracker();
   }
 
-  assignCanvasId(parentElement: HTMLElement): void {
+  assignCanvasId(parentElement: HTMLElement, name: string): void {
     const canvasElement = parentElement.querySelector('canvas');
     if (canvasElement) {
-      canvasElement.id = 'laptop-canvas';
+      canvasElement.id = name;
     }
   }
 
   initializeModel(
-    laptop: ElementRef<HTMLElement>
+    laptop: ElementRef<HTMLElement>,
   ): void {
     const WIDTH: number = window.innerWidth * 0.8;
     const HEIGHT: number = window.innerHeight * 0.85;
     // const HEIGHT: number = (parentElement.nativeElement.clientHeight/2) * .7;
 
-    this.setupRenderer(WIDTH, HEIGHT);
+    this.setupLaptopRenderer(WIDTH, HEIGHT);
     this.setupScene(WIDTH / HEIGHT);
 
-    laptop.nativeElement.appendChild(this.renderer.domElement);
+    laptop.nativeElement.appendChild(this.LaptopRenderer.domElement);
 
     this.loadModel();
 
     this.ngZone.runOutsideAngular(() => this.animate());
-
   }
 
-  private setupRenderer(width: number, height: number): void {
-    this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    this.renderer.outputColorSpace = THREE.SRGBColorSpace;
-    this.renderer.setSize(width, height);
-    this.renderer.setClearColor(0x000000, 0);
-    this.renderer.setPixelRatio(window.devicePixelRatio);
+  private setupLaptopRenderer(width: number, height: number): void {
+    this.LaptopRenderer = new THREE.WebGLRenderer({
+      antialias: true,
+      alpha: true,
+    });
+    this.LaptopRenderer.outputColorSpace = THREE.SRGBColorSpace;
+    this.LaptopRenderer.setSize(width, height);
+    this.LaptopRenderer.setClearColor(0x000000, 0);
+    this.LaptopRenderer.setPixelRatio(window.devicePixelRatio);
   }
 
   private setupScene(aspectRatio: number): void {
@@ -89,11 +94,16 @@ export class Model3dService {
     );
   }
 
+
   private onModelLoaded(gltf: GLTF): void {
     this.gltf = gltf;
     this.mesh = gltf.scene;
-    this.mesh.position.set(0, -2, 0);
+    // this.mesh.position.set(0, -2, 0);
+    this.mesh.position.set(0, -7, 0);
     this.mesh.scale.set(2, 2, 1);
+    // this.mesh.scale.set(2, 2, 1);
+
+    this.SCREEN_MESH = this.mesh.getObjectByName('Monitor_7');
 
     this.spotLight = new THREE.PointLight(0xffffff, 8, 0, 0.1);
     this.spotLight.position.set(0, 700, 750);
@@ -101,42 +111,12 @@ export class Model3dService {
 
   }
 
-  //Method to run the model animation
-  modelAnimation(gltf: GLTF) {
-    try {
-      if (gltf.animations && gltf.animations.length > 0) {
-        this.mixer = new THREE.AnimationMixer(this.mesh);
-        this.animationAction = this.mixer.clipAction(gltf.animations[0]);
-        this.animationAction.play();
-        this.stopAnimationAfterDelay(0.9);
-      } else {
-        console.warn('No animations found in the loaded GLTF model.');
-      }
-    } catch (error) {
-      return;
-    }
-  }
-
-  reverseModelAnimation() {
-    try {
-      this.animationAction.timeScale = -1.1;
-      this.animationAction.play();
-    } catch (error) {
-      return;
-    }
-  }
-
-  private stopAnimationAfterDelay(seconds: number): void {
-    setTimeout(() => {
-      this.stopTime = seconds;
-    }, seconds * 1000);
-  }
 
   private animate = (): void => {
     this.UpdateModelBasedOnCursor();
 
     requestAnimationFrame(this.animate);
-    this.renderer.render(this.scene, this.camera);
+    this.LaptopRenderer.render(this.scene, this.camera);
 
     if (this.mixer) {
       const delta = this.clock.getDelta();
@@ -170,18 +150,10 @@ export class Model3dService {
     });
   }
 
-  openLidAnimation() {
-    this.modelAnimation(this.gltf);
-  }
-
-  closeLidAnimation() {
-    this.reverseModelAnimation();
-  }
-
   resizeModel() {
-    let h  = window.innerHeight * 0.85;
+    let h = window.innerHeight * 0.85;
     this.camera.aspect = window.innerWidth / h;
     this.camera.updateProjectionMatrix();
-    this.renderer.setSize(window.innerWidth, h);
+    this.LaptopRenderer.setSize(window.innerWidth, h);
   }
 }

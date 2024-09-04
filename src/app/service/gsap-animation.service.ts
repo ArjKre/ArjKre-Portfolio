@@ -18,11 +18,10 @@ export class GsapAnimationService {
 
   hasTriggered = false;
 
-  constructor(private model: Model3dService) {
-    ScrollTrigger.defaults({
-      // Scoll effect Forward, Leave, Back, Back Leave
-      // toggleActions: 'restart pause resume pause',
-    });
+  model?: Model3dService;
+
+  constructor(private _model: Model3dService) {
+    this.model = _model;
   }
   private aValue!: number; //Don't know what this dose but without it the globe layout get's messed up!
   private modelPinPositionXAxis!: number;
@@ -61,7 +60,7 @@ export class GsapAnimationService {
 
   zoomInEffect() {
     // Hide the footer from showing
-    gsap.set(this.footerElement, { opacity: 0 });
+    gsap.set(this.footerElement, { display: 'none' });
 
     const globeZoomInTimeLine = gsap.timeline({
       scrollTrigger: {
@@ -75,7 +74,7 @@ export class GsapAnimationService {
         start: 'top top',
         end: 'center top',
         fastScrollEnd: true,
-        scrub: 0.5,  // Smoother scrub
+        scrub: 0.5, // Smoother scrub
       },
     });
 
@@ -85,7 +84,6 @@ export class GsapAnimationService {
   }
 
   ModelAnimation() {
-
     // Phone Model Invisible
     gsap.set(this.phoneElement, {
       opacity: 0,
@@ -103,23 +101,20 @@ export class GsapAnimationService {
       scrollTrigger: {
         id: 'tl1',
         trigger: this.projectContainer,
-        // markers: {
-        //   indent: 100,
-        // },
+        markers: {
+          indent: 100,
+        },
         start: 'top center',
-        end: '+=300',
+        end: '+=500',
         scrub: 0.7,  // Smoother scrub
         anticipatePin: 1,
         onUpdate: (self) => {
-          if (self.progress > 0.5 && !this.hasTriggered) {
-            this.model.openLidAnimation();
-            this.hasTriggered = true;
-          }
+          const reverseProgress = 1 - self.progress;
 
-          if (self.progress <= 0.5 && this.hasTriggered) {
-            this.model.closeLidAnimation();
-            this.hasTriggered = false;
-          }
+          const rotationAngle = (Math.PI / 2) * reverseProgress; // Adjust the factor to control the range
+          if (this.model!.SCREEN_MESH) {
+            this.model!.SCREEN_MESH.rotation.x = rotationAngle;
+          }          
         },
       },
     });
@@ -128,31 +123,34 @@ export class GsapAnimationService {
     tl1
       .to(this.laptopElement, {
         y: -this.modelPinPositionYAxis,
-        pin: true,
-        translateX: 0,
         opacity: 1,
         scale: 1,
-      },'-=0.1')
-      .fromTo(this.laptopElement, { y: -this.modelPinPositionYAxis, translateX: 0 }, { y: 0 });
+      })
+      .fromTo(
+        this.laptopElement,
+        { y: -this.modelPinPositionYAxis, translateX: 0},
+        { y: 0},
+        '-=0.1'
+      );
 
     const tl2 = gsap.timeline({
       scrollTrigger: {
         id: 'tl2',
-        // markers: {
-        //   indent: 400,
-        // },
+        markers: {
+          indent: 400,
+        },
         trigger: this.projectContainer,
         start: 'top top',
         end: 'bottom',
         pin: true,
         pinSpacing: false,
-        scrub: 1.5,  // Smoother and slower scrub
+        scrub: 1.5, // Smoother and slower scrub
         invalidateOnRefresh: true,
         onLeave: () => {
-          gsap.set(this.footerElement, { opacity: 1 });
+          gsap.set(this.footerElement, { display: 'flex' });
         },
         onEnterBack: () => {
-          gsap.set(this.footerElement, { opacity: 0 });
+          gsap.set(this.footerElement, { display: 'none' });
         },
       },
     });
@@ -161,11 +159,12 @@ export class GsapAnimationService {
     tl2.fromTo(
       this.laptopElement,
       { translateX: 0 },
-      { translateX: -this.modelPinPositionXAxis }
+      { translateX: -this.modelPinPositionXAxis },
+      '+=0.1'
     );
     this.txtAnimation(tl2, 1);
 
-    // LEFT - RIGHT / MC D's 
+    // LEFT - RIGHT / MC D's
     tl2
       .fromTo(
         this.laptopElement,
@@ -243,7 +242,4 @@ export class GsapAnimationService {
       '-=0.4'
     );
   }
-
- 
 }
-

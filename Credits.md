@@ -7,9 +7,9 @@
 
 
 ## 3D Models
-- **Model Name**: Asus ROG Flow X16
-  - **Creator**: kirigami318
-  - **Source**: https://sketchfab.com/kirigami318
+- **Model Name**: Asus ROG Strix Scar 17 (2023) G733 Gaming Laptop
+  - **Creator**: RaflyNaHa
+  - **Source**: https://sketchfab.com/RaflyNaHa
   - **License**: CC BY 4.0
 
 - **Model Name**: google-pixel-7pro
