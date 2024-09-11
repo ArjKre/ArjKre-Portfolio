@@ -1,36 +1,50 @@
 <div class="scrollable-content">
   <div class="projects-container" #projectsContainer>
     <div class="laptop-container" #laptop>
-      <!-- <div class="image"></div> -->
+      <div id="screen-content">
+        <div class="slide-images">
+          <svg class="slide-image" id="img-1">
+          </svg>
+          <svg class="slide-image" id="img-2">
+          </svg>
+          <svg class="slide-image" id="vid-1">
+            <foreignObject style="width: 100%; height: 100%;">
+              <video id="video" paused muted loop>
+                <source src="../../../assets/images/laptop/video.mp4" type="video/mp4" />
+              </video>
+            </foreignObject>
+          </svg>
+        </div>
+      </div>
+      <div id="laptop-screen" #laptopScreen></div>
     </div>
-    <div class="phone-container" #phone>
-      <!-- <div class="image"></div> -->
-    </div>
+    <div class="phone-container" #phone></div>
     <div class="slide-container">
       <ng-container *ngFor="let _content of content; let idx = index">
         <ng-container *ngIf="idx < 2">
           <app-slide
-          #appslide
-          class="app-slide"
-          [_currentContent]="_content"
+            #appslide
+            class="app-slide"
+            [_currentContent]="_content"
           ></app-slide>
         </ng-container>
-        
+
         <!-- Block for idx > 2 (ngClass applied based on odd/even) -->
         <ng-container *ngIf="idx >= 2">
           <app-slide
-          #appslide
-          class="app-slide"
-          style="position: absolute; top: 0"
-          [_currentContent]="_content"
-          [ngClass]="{
-            lft: idx % 2 === 0 && idx != content.length - 1,
-            rght: idx % 2 !== 0 || idx == content.length - 1
-          }"
+            #appslide
+            class="app-slide"
+            style="position: absolute; top: 0"
+            [_currentContent]="_content"
+            [ngClass]="{
+              lft: idx % 2 === 0 && idx != content.length - 1,
+              rght: idx % 2 !== 0 || idx == content.length - 1
+            }"
           ></app-slide>
         </ng-container>
       </ng-container>
     </div>
   </div>
 </div>
-<div class="footer-spaceholder" #footerholder></div>
+<div class="footer-spaceholder" #footerholder>
+</div>

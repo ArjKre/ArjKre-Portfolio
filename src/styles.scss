@@ -27,6 +27,7 @@ html {
   //  }
 }
 
+
 #encom-globe-canvas {
   position: relative;
   z-index: 0;
@@ -34,8 +35,11 @@ html {
 }
 
 #laptop-canvas{
+  position: relative;
+  // z-index: 1;
   // outline: 1px solid blue;
 }
+
 
 .delay-100ms {
   animation-delay: 100ms !important;

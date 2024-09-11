@@ -30,6 +30,9 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnChanges{
   @ViewChild('laptop', { static: true })
   laptopContainer!: ElementRef<HTMLElement>;
 
+  @ViewChild('laptopScreen', { static: true })
+  laptopScreenContainer!: ElementRef<HTMLElement>;
+
   @ViewChild('phone', { static: true })
   phoneContainer!: ElementRef<HTMLElement>;
 
@@ -51,8 +54,8 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnChanges{
   constructor(private LaptopService: Model3dService,private phoneService: Phone3dService) {}
 
   ngOnInit(): void {
-    this.LaptopService.initializeModel(this.laptopContainer);
-    this.LaptopService.assignCanvasId(this.laptopContainer.nativeElement);
+    this.LaptopService.initializeModel(this.laptopContainer,this.laptopScreenContainer);
+    this.LaptopService.assignCanvasId(this.laptopContainer.nativeElement,'laptop-canvas');
 
     this.phoneService.initializeModel(this.phoneContainer);
     this.phoneService.assignCanvasId(this.phoneContainer.nativeElement);
