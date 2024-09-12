@@ -1,5 +1,13 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, QueryList } from '@angular/core';
-import { GsapAnimationService } from '../service/gsap-animation.service';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  HostListener,
+  QueryList,
+} from '@angular/core';
+import { GlobeAnimationService } from '../service/globe-animation.service';
+import { ModelAnimationService } from '../service/model-animation.service';
 
 @Component({
   templateUrl: './main.component.html',
@@ -10,24 +18,41 @@ export class MainComponent implements AfterViewInit {
   heroContainer?: HTMLElement;
   projectContainer?: HTMLElement;
   laptopCanvas?: HTMLElement;
+  laptopImages?: ElementRef<HTMLElement>[];
   phoneCanvas?: HTMLElement;
-  slidesElement?: ElementRef<HTMLElement>[];
-  FooterElement? : HTMLElement;
+  contentElements?: ElementRef<HTMLElement>[];
+  FooterElement?: HTMLElement;
 
-  isAboutClicked : boolean = false
+  isAboutClicked: boolean = false;
 
   footerHeight: number = 0;
+  isFooterVisible: boolean = false;
 
-  constructor(private gsapAnimation: GsapAnimationService, private cd: ChangeDetectorRef) {}
+  constructor(
+    private globeAnimation: GlobeAnimationService,
+    private modelAnimation: ModelAnimationService,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngAfterViewInit(): void {
     this.checkAndInitialize();
   }
 
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    let scrollPosition = window.scrollY;
+    const totalHeight =
+      document.documentElement.scrollHeight - window.innerHeight;
+
+    if (scrollPosition > totalHeight * 0.7) {
+      this.isFooterVisible = true;
+    } else {
+      this.isFooterVisible = false;
+    }
+  }
+
   accessGlobeElement(event: ElementRef<HTMLElement>) {
     this.heroContainer = event.nativeElement;
-    this.gsapAnimation.heroStartElement = this.heroContainer;
-    this.checkAndInitialize();
   }
 
   accessProjectsElement(event: {
@@ -39,19 +64,20 @@ export class MainComponent implements AfterViewInit {
     this.projectContainer = event.projectContainer.nativeElement;
     this.laptopCanvas = event.laptop.nativeElement;
     this.phoneCanvas = event.phone.nativeElement;
-    this.slidesElement = event.slides.toArray();
+    this.contentElements = event.slides.toArray();
   }
 
   checkAndInitialize() {
-    this.gsapAnimation.initialize(
+    this.globeAnimation.runGlobeAnimation(
       this.heroContainer!,
+      this.projectContainer!
+    );
+    this.modelAnimation.runModelAnimation(
       this.projectContainer!,
       this.laptopCanvas!,
       this.phoneCanvas!,
-      this.slidesElement!,
-      this.FooterElement!,
+      this.contentElements!
     );
-    this.gsapAnimation.runAnimation();
   }
 
   accessFooterHeight(event: HTMLElement) {
@@ -60,11 +86,11 @@ export class MainComponent implements AfterViewInit {
     this.cd.detectChanges();
   }
 
-  navbarAboutClicked(event : boolean){
+  navbarAboutClicked(event: boolean) {
     this.isAboutClicked = event;
   }
 
-  onBackBtnClicked(event : boolean){
+  onBackBtnClicked(event: boolean) {
     this.isAboutClicked = !event;
   }
 }

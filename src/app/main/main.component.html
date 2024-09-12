@@ -18,11 +18,11 @@
   <app-projects class="app-projects"
     [ngClass]="{ 'aboutClicked': isAboutClicked }"
     [footerElement]="footerHeight"
-    (ProjectsComponentEmit)="accessProjectsElement($event)"
-  >
+    (ProjectsComponentEmit)="accessProjectsElement($event)" 
+    >
   </app-projects>
 
-  <app-footer class="app-footer"
+  <app-footer class="app-footer" *ngIf="isFooterVisible"
     [ngClass]="{ 'aboutClicked': isAboutClicked }"
     (footerHeightEmitter)="accessFooterHeight($event)"
   >

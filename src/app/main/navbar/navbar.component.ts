@@ -6,7 +6,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
     <div class="navbar-container">
       <a>
         <div class="img-container">
-          <img [src]="imagePath" class="prf" alt="logo" />
+          <img [src]="imagePath" class="prf" alt="logo"  (click)="imgClick()" />
         </div>
       </a>
       <div class="link-container underline-transition">
@@ -40,5 +40,12 @@ export class NavbarComponent implements OnInit {
 
   aboutClick(){
     this.abtBtnClick.emit(!this.isabtBtnClick);
+  }
+
+  imgClick(){
+    window.scrollTo({
+      top:0,
+      behavior: 'smooth',
+    })
   }
 }

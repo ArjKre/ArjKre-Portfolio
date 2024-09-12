@@ -5,7 +5,7 @@ import { GLTFLoader, GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 @Injectable({
   providedIn: 'root'
 })
-export class Phone3dService {
+export class PhoneModelService {
   private scene!: THREE.Scene;
   private camera!: THREE.PerspectiveCamera;
   private renderer!: THREE.WebGLRenderer;

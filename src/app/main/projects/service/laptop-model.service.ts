@@ -4,13 +4,13 @@ import {
   CSS3DRenderer,
   CSS3DObject,
 } from 'three/examples/jsm/renderers/CSS3DRenderer';
-import { GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 
 @Injectable({
   providedIn: 'root',
 })
-export class Model3dService {
+export class LaptopModelService {
   private scene!: THREE.Scene;
   private camera!: THREE.PerspectiveCamera;
   private _camera!: THREE.PerspectiveCamera;
@@ -70,18 +70,18 @@ export class Model3dService {
     screen: ElementRef<HTMLElement>
   ): void {
 
-    
+
     //LAPTOP
     this.setupLaptopRenderer(window.innerWidth, window.innerHeight);
     this.setupLaptopScene(window.innerWidth / window.innerHeight);
     laptop.nativeElement.appendChild(this.LaptopRenderer.domElement);
     this.loadModel();
-    
+
     //LAPTOP SCREEN
     this.setupScreenRenderer(window.innerWidth, window.innerHeight);
     this.setupLaptopScreenScene(window.innerWidth / window.innerHeight);
     screen.nativeElement.appendChild(this.screenRenderer.domElement);
-    
+
     this.ngZone.runOutsideAngular(() => this.animate());
   }
 
@@ -138,7 +138,7 @@ export class Model3dService {
     this.LaptopLid_MESH = this.mesh.getObjectByName('screenflip');
     this.Screen_MESH = this.mesh.getObjectByName('Cube008_2');
 
-    this.LaptopLid_MESH!.rotation.x = Math.PI/2;
+    this.LaptopLid_MESH!.rotation.x = Math.PI / 2;
 
     const material = new THREE.MeshPhongMaterial({
       opacity: 0.15,
@@ -146,7 +146,7 @@ export class Model3dService {
       blending: THREE.NoBlending,
     });
 
-    this.applyMaterialToObject(this.Screen_MESH,material);
+    this.applyMaterialToObject(this.Screen_MESH, material);
 
     this.pointLight = new THREE.PointLight(0xffffff, 10, 0, 0);
     this.pointLight.position.set(0, 150, 50);
@@ -175,7 +175,7 @@ export class Model3dService {
     const _screenContent = document.getElementById('screen-content');
     this.screenContent = _screenContent?.cloneNode(true) as HTMLElement;
     _screenContent!.remove();
-
+    
     //mesh
     this.cssObject = new CSS3DObject(this.screenContent!);
     this.screenScene.add(this.cssObject);
@@ -198,6 +198,14 @@ export class Model3dService {
     this.cssObject.position.copy(position);
     this.cssObject.quaternion.copy(quaternion);
     this.cssObject.rotateOnAxis(new THREE.Vector3(1, 0, 0), (Math.PI / 2) * -1);
+  }
+
+  closeAndOpenAnimation(progress: number) {
+    const reverseProgress = 1 - progress;
+    const rotationAngle = (Math.PI / 2) * reverseProgress;
+    if (this.LaptopLid_MESH) {
+      this.LaptopLid_MESH.rotation.x = rotationAngle;
+    }
   }
 
   private animate = (): void => {
@@ -241,8 +249,8 @@ export class Model3dService {
 
   private CursorTracker() {
     document.addEventListener('mousemove', (event) => {
-        this.mouseX = event.clientX - this.windowHalfX;
-        this.mouseY = event.clientY - this.windowHalfY;
+      this.mouseX = event.clientX - this.windowHalfX;
+      this.mouseY = event.clientY - this.windowHalfY;
     });
   }
 
@@ -252,5 +260,9 @@ export class Model3dService {
     this.camera.updateProjectionMatrix();
     this.LaptopRenderer.setSize(window.innerWidth, h);
     this.screenRenderer.setSize(window.innerWidth, h); // Resize CSS3DRenderer
+  }
+
+  screenContentEmit(): any {
+    console.log(this.screenContent);
   }
 }

@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './main/navbar/navbar.component';
 import { HeroComponent } from './main/hero/hero.component';
 import { MainComponent } from './main/main.component';
-import { GsapAnimationService } from './service/gsap-animation.service';
+import { GlobeAnimationService } from './service/globe-animation.service';
 import { SlideComponent } from './main/projects/slide/slide.component';
 import { ProjectsComponent } from './main/projects/projects.component';
 import { FooterComponent } from './main/footer/footer.component';
@@ -32,7 +32,7 @@ import { AboutComponent } from './main/about/about.component';
     HttpClientModule,
     BrowserAnimationsModule,
   ],
-  providers: [GsapAnimationService ],
+  providers: [GlobeAnimationService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
