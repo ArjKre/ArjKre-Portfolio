@@ -16,10 +16,14 @@ export class ModelAnimationService {
 
   private modelPinPositionXAxis!: number;
 
-  private slideImages?: HTMLElement;
+  private slideLaptopImages?: HTMLElement;
   private screenContent1?: HTMLElement;
   private screenContent2?: HTMLElement;
   private video?: HTMLVideoElement;
+
+  private slidePhoneImages?: HTMLElement;
+  private phnScreenContent1?: HTMLElement;
+  private phnScreenContent2?: HTMLElement;
 
   constructor(private model: LaptopModelService) {}
 
@@ -65,10 +69,14 @@ export class ModelAnimationService {
         start: 'top top+=300',
         end: '+=300',
         onUpdate: (self) => {
-          this.slideImages = document.getElementById('screen-content')!;
-          this.screenContent1 = this.slideImages!.querySelector('.img1')!;
-          this.screenContent2 = this.slideImages!.querySelector('.img2')!;
-          this.video = this.slideImages!.querySelector('video')!;
+          this.slideLaptopImages = document.getElementById('laptopScreenContent')!;
+          this.screenContent1 = this.slideLaptopImages!.querySelector('.img1')!;
+          this.screenContent2 = this.slideLaptopImages!.querySelector('.img2')!;
+          this.video = this.slideLaptopImages!.querySelector('video')!;
+
+          this.slidePhoneImages = document.getElementById('phoneScreenContent')!;
+          this.phnScreenContent1 = this.slidePhoneImages!.querySelector('.ph1')!;
+          this.phnScreenContent2 = this.slidePhoneImages!.querySelector('.ph2')!;
 
           this.model!.closeAndOpenAnimation(self.progress);
 
@@ -76,9 +84,9 @@ export class ModelAnimationService {
             this.laptopElement.style.filter = `brightness(${self.progress})`;
           }
 
-          if (this.slideImages) {
-            this.slideImages.style.filter = `brightness(${self.progress})`;
-            this.slideImages.style.opacity = `${self.progress}`;
+          if (this.slideLaptopImages) {
+            this.slideLaptopImages.style.filter = `brightness(${self.progress})`;
+            this.slideLaptopImages.style.opacity = `${self.progress}`;
           }
         },
       },
@@ -194,7 +202,7 @@ export class ModelAnimationService {
       .fromTo(
         this.phoneElement,
         { translateX: -this.modelPinPositionXAxis, opacity: 0 },
-        { translateX: this.modelPinPositionXAxis, opacity: 1 }
+        { translateX: this.modelPinPositionXAxis, opacity: 1}
       );
     this.txtAnimation(tl1, 2);
 
@@ -203,7 +211,16 @@ export class ModelAnimationService {
       .fromTo(
         this.phoneElement,
         { translateX: this.modelPinPositionXAxis },
-        { translateX: -this.modelPinPositionXAxis }
+        { translateX: -this.modelPinPositionXAxis ,
+          onComplete:()=>{
+          if(this.phnScreenContent1){
+            this.phnScreenContent1.style.opacity ='0';
+          }
+        },onReverseComplete:()=>{
+          if(this.phnScreenContent1){
+            this.phnScreenContent1.style.opacity ='1';
+          }
+        } }
       )
       .to(
         this.contentElements[2].nativeElement,

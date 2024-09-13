@@ -37,13 +37,37 @@
   height: 100%;
 }
 
-#screen-content {
+#laptopScreenContent{
   width: 460px;
   height: 301px;
   filter: brightness(0);
   opacity: 0;
+}
+
+.phone-container {
+  display: flex;
+  position: absolute;
+  z-index: 1;
+  max-height: 860.2px;
+  // outline: 1px solid blue;
+}
+
+#phone-screen{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#phoneScreenContent{
+  width: 41px;
+  height: 90px;
   // background-color: red;
-  // border: 1px solid red;
+}
+
+
+.screen-content {
 
   .slide-images {
     width: 100%;
@@ -64,7 +88,7 @@
       }
     }
     .img1 {
-      background-image: url(../../../assets/images/laptop/UPSCHOOL_SCREENSHOT.png);
+      background-image: url(../../../assets/images/laptop/UPSCHOOL.png);
       z-index: 3;
     }
 
@@ -76,21 +100,21 @@
     .vid {
       z-index: 1;
     }
-
+    
     #video {
       width: 100%;
       height: 100%;
       object-fit: inherit;
       z-index: 1;
     }
-  }
-}
 
-.phone-container {
-  position: absolute;
-  z-index: 100;
-  max-height: 860.2px;
-  // outline: 1px solid blue;
+    .ph1{
+      z-index: 2;
+    }
+    .ph2{
+      z-index: 1;
+    }
+  }
 }
 
 .slide-container {

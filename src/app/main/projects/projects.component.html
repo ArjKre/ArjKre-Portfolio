@@ -1,7 +1,7 @@
 <div class="scrollable-content">
   <div class="projects-container" #projectsContainer>
     <div class="laptop-container" #laptop>
-      <div id="screen-content">
+      <div class="screen-content" id="laptopScreenContent">
         <div class="slide-images">
           <svg class="slide-image img1"></svg>
           <svg class="slide-image img2"></svg>
@@ -10,7 +10,8 @@
               <video id="video" paused muted loop>
                 <source
                   src="../../../assets/images/laptop/video.mp4"
-                  type="video/mp4"/>
+                  type="video/mp4"
+                />
               </video>
             </foreignObject>
           </svg>
@@ -18,7 +19,45 @@
       </div>
       <div id="laptop-screen" #laptopScreen></div>
     </div>
-    <div class="phone-container" #phone></div>
+    <div class="phone-container" #phone>
+      <div class="screen-content" id="phoneScreenContent">
+        <div class="slide-images">
+          <svg class="slide-image ph1">
+            <!-- Rectangle with curved corners -->
+            <rect rx="5" ry="5" fill="none" stroke="transparent" />
+
+            <!-- Clip the image to the rectangle shape -->
+            <clipPath id="rounded-corners">
+              <rect width="41" height="90" rx="5" ry="5" />
+            </clipPath>
+
+            <!-- Background image clipped to the rectangle with rounded corners -->
+            <image
+              href="../../../assets/images/phone/blckdrop.png"
+              clip-path="url(#rounded-corners)"
+              preserveAspectRatio="xMidYMid slice"
+            />
+          </svg>
+          <svg class="slide-image ph2">
+            <!-- Rectangle with curved corners -->
+            <rect rx="5" ry="5" fill="none" stroke="transparent" />
+
+            <!-- Clip the image to the rectangle shape -->
+            <clipPath id="rounded-corners">
+              <rect width="41" height="90" rx="5" ry="5" />
+            </clipPath>
+
+            <!-- Background image clipped to the rectangle with rounded corners -->
+            <image
+              href="../../../assets/images/phone/gamehub.png"
+              clip-path="url(#rounded-corners)"
+              preserveAspectRatio="xMidYMid slice"
+            />
+          </svg>
+        </div>
+      </div>
+      <div id="phone-screen" #phoneScreen></div>
+    </div>
     <div class="slide-container">
       <ng-container *ngFor="let _content of content; let idx = index">
         <ng-container *ngIf="idx < 2">

@@ -36,6 +36,9 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnChanges{
   @ViewChild('phone', { static: true })
   phoneContainer!: ElementRef<HTMLElement>;
 
+  @ViewChild('phoneScreen', { static: true })
+  phoneScreen!: ElementRef<HTMLElement>;
+
   @ViewChildren('appslide', { read: ElementRef })
   contentSlides!: QueryList<ElementRef<HTMLElement>>;
 
@@ -63,8 +66,8 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnChanges{
       'laptop-canvas'
     );
 
-    this.phoneService.initializeModel(this.phoneContainer);
-    this.phoneService.assignCanvasId(this.phoneContainer.nativeElement);
+    this.phoneService.initializeModel(this.phoneContainer,this.phoneScreen);
+    this.phoneService.assignCanvasId(this.phoneContainer.nativeElement,'phone-canvas');
   }
 
   ngOnChanges(changes: SimpleChanges): void {

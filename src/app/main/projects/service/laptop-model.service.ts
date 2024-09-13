@@ -21,7 +21,7 @@ export class LaptopModelService {
   private screenScene!: THREE.Scene; // Scene for CSS3DRenderer
 
   private readonly LAPTOP_MODEL_FILE: string =
-    '../../../../assets/models/MacBook/';
+    '../../../../assets/models/';
   private modelLoader: GLTFLoader = new GLTFLoader().setPath(
     this.LAPTOP_MODEL_FILE
   );
@@ -40,13 +40,11 @@ export class LaptopModelService {
   private windowHalfX = window.innerWidth / 2;
   private windowHalfY = window.innerHeight / 2;
 
-  // WIDTH: number = window.innerWidth * 0.8;
   WIDTH: number = window.innerWidth * 0.8;
   HEIGHT: number = window.innerHeight * 0.8;
 
   LaptopLid_MESH?: THREE.Object3D<THREE.Object3DEventMap>;
   Screen_MESH?: any;
-  base_MESH?: THREE.Object3D<THREE.Object3DEventMap>;
   cssObject?: any;
   screenContent?: HTMLElement;
 
@@ -65,11 +63,7 @@ export class LaptopModelService {
     }
   }
 
-  initializeModel(
-    laptop: ElementRef<HTMLElement>,
-    screen: ElementRef<HTMLElement>
-  ): void {
-
+  initializeModel(laptop: ElementRef<HTMLElement>,screen: ElementRef<HTMLElement>): void {
 
     //LAPTOP
     this.setupLaptopRenderer(window.innerWidth, window.innerHeight);
@@ -97,7 +91,6 @@ export class LaptopModelService {
   }
 
   private setupScreenRenderer(width: number, height: number): void {
-    // Initialize CSS3DRenderer
     this.screenRenderer = new CSS3DRenderer();
     this.screenRenderer.setSize(width, height);
     this.screenRenderer.domElement.style.position = 'absolute';
@@ -107,7 +100,6 @@ export class LaptopModelService {
   private setupLaptopScene(aspectRatio: number): void {
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 1000);
-    // this.camera.position.z = 7;
     this.camera.position.z = 750;
   }
   private setupLaptopScreenScene(aspectRatio: number): void {
@@ -172,11 +164,10 @@ export class LaptopModelService {
   }
 
   createLaptopScreen() {
-    const _screenContent = document.getElementById('screen-content');
+    const _screenContent = document.getElementById('laptopScreenContent');
     this.screenContent = _screenContent?.cloneNode(true) as HTMLElement;
     _screenContent!.remove();
     
-    //mesh
     this.cssObject = new CSS3DObject(this.screenContent!);
     this.screenScene.add(this.cssObject);
 
@@ -194,7 +185,6 @@ export class LaptopModelService {
 
     this.Screen_MESH.matrixWorld.decompose(position, quaternion, scale);
 
-    // this.cssObject.position.add(new THREE.Vector3(0, 30, 0));
     this.cssObject.position.copy(position);
     this.cssObject.quaternion.copy(quaternion);
     this.cssObject.rotateOnAxis(new THREE.Vector3(1, 0, 0), (Math.PI / 2) * -1);
@@ -259,10 +249,7 @@ export class LaptopModelService {
     this.camera.aspect = window.innerWidth / h;
     this.camera.updateProjectionMatrix();
     this.LaptopRenderer.setSize(window.innerWidth, h);
-    this.screenRenderer.setSize(window.innerWidth, h); // Resize CSS3DRenderer
+    this.screenRenderer.setSize(window.innerWidth, h); 
   }
 
-  screenContentEmit(): any {
-    console.log(this.screenContent);
-  }
 }
