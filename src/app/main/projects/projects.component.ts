@@ -12,9 +12,9 @@ import {
   ViewChild,
   ViewChildren,
 } from '@angular/core';
-import { LaptopModelService } from './service/laptop-model.service';
-import { Content, contentList } from './service/content';
-import { PhoneModelService } from './service/phone-model.service';
+import { LaptopModelService } from '../../service/laptop-model.service';
+import { Content, contentList } from '../../service/content';
+import { PhoneModelService } from '../../service/phone-model.service';
 
 @Component({
   selector: 'app-projects',

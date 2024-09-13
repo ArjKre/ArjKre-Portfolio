@@ -1,7 +1,7 @@
 import { ElementRef, Injectable } from '@angular/core';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { LaptopModelService } from '../main/projects/service/laptop-model.service';
+import { LaptopModelService } from './laptop-model.service';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -23,7 +23,6 @@ export class ModelAnimationService {
 
   private slidePhoneImages?: HTMLElement;
   private phnScreenContent1?: HTMLElement;
-  private phnScreenContent2?: HTMLElement;
 
   constructor(private model: LaptopModelService) {}
 
@@ -76,7 +75,6 @@ export class ModelAnimationService {
 
           this.slidePhoneImages = document.getElementById('phoneScreenContent')!;
           this.phnScreenContent1 = this.slidePhoneImages!.querySelector('.ph1')!;
-          this.phnScreenContent2 = this.slidePhoneImages!.querySelector('.ph2')!;
 
           this.model!.closeAndOpenAnimation(self.progress);
 
@@ -112,7 +110,7 @@ export class ModelAnimationService {
     tl1.fromTo(
       this.laptopElement,
       { translateX: 0 },
-      { translateX: -this.modelPinPositionXAxis, onStart: () => {} },
+      { translateX: -this.modelPinPositionXAxis},
       '+=0.1'
     );
     this.txtAnimation(tl1, 1);
@@ -123,11 +121,11 @@ export class ModelAnimationService {
         this.laptopElement,
         {
           translateX: -this.modelPinPositionXAxis,
-          onReverse: () => {
-            if (this.screenContent1) {
-              this.screenContent1!.style.opacity = '0';
-            }
-          },
+          // onReverse: () => {
+          //   if (this.screenContent1) {
+          //     this.screenContent1!.style.opacity = '0';
+          //   }
+          // },
         },
         {
           translateX: this.modelPinPositionXAxis,
