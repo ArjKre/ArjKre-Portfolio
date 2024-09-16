@@ -1,4 +1,7 @@
 TODO
+    ☐ In About Section
+        ✔ writing down the content for About Section @started(24-09-16 16:38) @done(24-09-16 16:38) @lasted(11s)
+        ✔ Implement on resume click download's resume. @done(24-09-16 19:25)
     ☐ Redesign navbar
     ☐ Setup Resize function for all the models
         ☐ Font Sizes & Layout
@@ -8,11 +11,12 @@ TODO
         ☐ Phone Screen-Content
         ☐ Navbar
     ☐ OnClick Functionality for laptop Screen
-    ☐ Remove subTitle from Project Section
-    ☐ In About Section
-        ☐ writing down the content for About Section
-        ☐ Add Contact Button which open's up contact Section
+    ✔ Remove subTitle from Project Section @started(24-09-16 19:02) @done(24-09-16 19:25) @lasted(23m30s)
     ☐ Implement a LOADING PAGE
+    ✔ Buy Domain Name @done(24-09-16 18:36)
+    ☐ Buy Hosting Service.
 
 FIX-ME
+    ✔ SmartPhone model not displaying before mouse movement. @done(24-09-16 22:00)
+    ☐ Sometimes smartphone model goes out of bounds.
 

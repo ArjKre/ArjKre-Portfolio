@@ -59,29 +59,15 @@
       <div id="phone-screen" #phoneScreen></div>
     </div>
     <div class="slide-container">
-      <ng-container *ngFor="let _content of content; let idx = index">
-        <ng-container *ngIf="idx < 2">
-          <app-slide
-            #appslide
-            class="app-slide"
-            [_currentContent]="_content"
-          ></app-slide>
-        </ng-container>
-
-        <!-- Block for idx > 2 (ngClass applied based on odd/even) -->
-        <ng-container *ngIf="idx >= 2">
-          <app-slide
-            #appslide
-            class="app-slide"
-            style="position: absolute; top: 0"
-            [_currentContent]="_content"
-            [ngClass]="{
-              lft: idx % 2 === 0 && idx != content.length - 1,
-              rght: idx % 2 !== 0 || idx == content.length - 1
-            }"
-          ></app-slide>
-        </ng-container>
-      </ng-container>
+      <div class="left">
+        <app-slide [_currentContent]="this.content[1]" #appslide></app-slide>
+        <app-slide class="lft" [_currentContent]="this.content[3]" #appslide></app-slide>
+      </div>
+      <div class="right">
+        <app-slide [_currentContent]="this.content[0]" #appslide></app-slide>
+        <app-slide class="rght" [_currentContent]="this.content[2]" #appslide></app-slide>
+        <app-slide class="rght" [_currentContent]="this.content[4]" #appslide></app-slide>
+      </div>
     </div>
   </div>
 </div>

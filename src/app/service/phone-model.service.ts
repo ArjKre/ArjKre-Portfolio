@@ -30,8 +30,8 @@ export class PhoneModelService {
 
   private mouseX?: number;
   private mouseY?: number;
-  private targetY?: number;
-  private targetX?: number;
+  private targetY: number = 0;
+  private targetX: number = 0;
 
   private windowHalfX = window.innerWidth / 2;
   private windowHalfY = window.innerHeight / 2;
@@ -216,12 +216,9 @@ export class PhoneModelService {
     this.targetX = this.mouseX! * 0.0001;
     this.targetY = this.mouseY! * 0.0001;
 
-    if (this.mesh) {
-      this.mesh.rotation.set(
-        this.targetY!,
-        this.targetX!,
-        this.mesh.rotation.z
-      );
+    if (this.mesh && !Number.isNaN(this.targetX) && !Number.isNaN(this.targetY)) {
+      this.mesh.rotation.y = this.targetX;
+      this.mesh.rotation.x = this.targetY;
     }
   }
 

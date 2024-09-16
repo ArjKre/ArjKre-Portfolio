@@ -2,18 +2,13 @@
   <div class="heading">
     <h2>{{ _currentContent.title }}</h2>
   </div>
-  <div class="sub-heading">
-    <h3>{{ _currentContent.subtitle }}</h3>
-  </div>
   <div class="para">
     <p>{{ _currentContent.para }}</p>
   </div>
   <div class="tech">
     <ng-container *ngFor="let lang of _currentContent.tech; let i = index">
       <div class="tech-txt">
-        <a [ngClass]="'lang-' + i">
-          {{ lang }}
-        </a>
+        <p>{{lang}}</p>
       </div>
     </ng-container>
   </div>

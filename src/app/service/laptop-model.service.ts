@@ -230,7 +230,7 @@ export class LaptopModelService {
       this.targetX = this.mouseX * 0.0002;
       this.targetY = this.mouseY * 0.0002;
 
-      if (this.mesh) {
+      if (this.mesh && !Number.isNaN(this.targetX) && !Number.isNaN(this.targetY)) {
         this.mesh.rotation.y = this.targetX;
         this.mesh.rotation.x = this.targetY;
       }

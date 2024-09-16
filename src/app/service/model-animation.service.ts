@@ -26,14 +26,6 @@ export class ModelAnimationService {
 
   constructor(private model: LaptopModelService) {}
 
-  private txtAnimation(timeline: gsap.core.Timeline, idx: number) {
-    return timeline.to(
-      this.contentElements[idx].nativeElement,
-      { opacity: 1 },
-      '-=0.4'
-    );
-  }
-
   runModelAnimation(
     projectContainer: HTMLElement,
     laptop: HTMLElement,
@@ -48,6 +40,14 @@ export class ModelAnimationService {
     this.ModelAnimation();
   }
 
+  private txtAnimation(timeline: gsap.core.Timeline, idx: number) {
+    return timeline.to(
+      this.contentElements[idx].nativeElement,
+      { opacity: 1 },
+      '-=0.4'
+    );
+  }
+
   private ModelAnimation() {
     // Phone Model Invisible
     gsap.set(this.phoneElement, {
@@ -57,6 +57,7 @@ export class ModelAnimationService {
 
     // SlideElements
     this.contentElements.forEach((slide) => {
+      // console.log(slide.nativeElement);
       gsap.set(slide.nativeElement, { opacity: 0 });
     });
 
@@ -113,7 +114,7 @@ export class ModelAnimationService {
       { translateX: -this.modelPinPositionXAxis},
       '+=0.1'
     );
-    this.txtAnimation(tl1, 1);
+    this.txtAnimation(tl1, 2);
 
     // LEFT -> RIGHT / 95R
     tl1
@@ -142,7 +143,7 @@ export class ModelAnimationService {
         }
       )
       .to(
-        this.contentElements[1].nativeElement,
+        this.contentElements[2].nativeElement,
         { zIndex: 0, opacity: 0 },
         '-=0.5'
       );
@@ -202,7 +203,7 @@ export class ModelAnimationService {
         { translateX: -this.modelPinPositionXAxis, opacity: 0 },
         { translateX: this.modelPinPositionXAxis, opacity: 1}
       );
-    this.txtAnimation(tl1, 2);
+    this.txtAnimation(tl1, 1);
 
     // LEFT -> RIGHT /GameHub
     tl1
@@ -221,7 +222,7 @@ export class ModelAnimationService {
         } }
       )
       .to(
-        this.contentElements[2].nativeElement,
+        this.contentElements[1].nativeElement,
         { zIndex: 0, opacity: 0 },
         '-=0.5'
       );
