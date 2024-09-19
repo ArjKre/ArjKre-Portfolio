@@ -36,8 +36,6 @@ export class PhoneModelService {
   private windowHalfX = window.innerWidth / 2;
   private windowHalfY = window.innerHeight / 2;
 
-  // WIDTH: number = window.innerWidth * 0.8;
-  // HEIGHT: number = window.innerHeight * 0.8;
   WIDTH: number = window.innerWidth;
   HEIGHT: number = window.innerHeight;
 
@@ -229,13 +227,5 @@ export class PhoneModelService {
       this.mouseX = event.clientX - this.windowHalfX;
       this.mouseY = event.clientY - this.windowHalfY;
     });
-  }
-
-
-  resizeModel() {
-    let h  = window.innerHeight * 0.85;
-    this.camera.aspect = window.innerWidth / h;
-    this.camera.updateProjectionMatrix();
-    this.phoneRenderer.setSize(window.innerWidth, h);
   }
 }

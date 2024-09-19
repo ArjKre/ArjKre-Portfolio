@@ -11,7 +11,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
       </a>
       <div class="link-container underline-transition">
         <span class="abt-link" (click)="aboutClick()">About</span>
-        <span class="contact-link" (click)="contactClick()">Contact Us</span>
+        <span class="contact-link" (click)="contactClick()">Contact</span>
       </div>
     </div>
   `,

@@ -40,8 +40,8 @@ export class LaptopModelService {
   private windowHalfX = window.innerWidth / 2;
   private windowHalfY = window.innerHeight / 2;
 
-  WIDTH: number = window.innerWidth * 0.8;
-  HEIGHT: number = window.innerHeight * 0.8;
+  WIDTH: number = window.innerWidth;
+  HEIGHT: number = window.innerHeight;
 
   LaptopLid_MESH?: THREE.Object3D<THREE.Object3DEventMap>;
   Screen_MESH?: any;
@@ -244,12 +244,5 @@ export class LaptopModelService {
     });
   }
 
-  resizeModel() {
-    const h = window.innerHeight * 0.85;
-    this.camera.aspect = window.innerWidth / h;
-    this.camera.updateProjectionMatrix();
-    this.LaptopRenderer.setSize(window.innerWidth, h);
-    this.screenRenderer.setSize(window.innerWidth, h); 
-  }
 
 }

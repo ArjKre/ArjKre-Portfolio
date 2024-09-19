@@ -75,11 +75,9 @@ export class ModelAnimationService {
         end: '+=300',
         invalidateOnRefresh : true,
         onUpdate: (self) => {
-          this.slideLaptopImages = document.getElementById(
-            'laptopScreenContent'
-          )!;
-
+          
           if(!ranOnce){
+            this.slideLaptopImages = document.getElementById('laptopScreenContent')!;
             this.screenContent1 = this.slideLaptopImages!.querySelector('.img1')!;
             this.screenContent2 = this.slideLaptopImages!.querySelector('.img2')!;
             this.video = this.slideLaptopImages!.querySelector('video')!;
@@ -114,19 +112,15 @@ export class ModelAnimationService {
         end: 'bottom',
         pin: true,
         pinSpacing: false,
-        scrub: 1.5, 
+        scrub: 1.7, 
         invalidateOnRefresh: true,
       },
     });
 
     // CENTER -> LEFT /GOVT UP
-    tl1.fromTo(
-      this.laptopElement,
-      { translateX: 0 },
-      { translateX: -this.xAxis },
-      '+=0.1'
-    );
+    tl1.fromTo(this.laptopElement,{ translateX: 0 },{ translateX: -this.xAxis },'+=0.1');
     this.txtAnimation(tl1, 2);
+    tl1.to(this.laptopElement,{},'-=0.1');
 
     // LEFT -> RIGHT / 95R
     tl1
@@ -155,6 +149,7 @@ export class ModelAnimationService {
         '-=0.5'
       );
     this.txtAnimation(tl1, 0);
+    tl1.to(this.laptopElement,{},'-=0.1');
 
     // RIGHT -> LEFT / MC D's
     tl1
@@ -183,7 +178,7 @@ export class ModelAnimationService {
         { zIndex: 0, opacity: 0 },
         '-=0.5'
       );
-    this.txtAnimation(tl1, 3);
+    this.txtAnimation(tl1,3);
 
     // Switching from laptop to smartphone
     tl1;
@@ -215,7 +210,7 @@ export class ModelAnimationService {
         { translateX: -this.xAxis, opacity: 0 },
         { translateX: this.xAxis, opacity: 1 }
       );
-    this.txtAnimation(tl1, 1);
+    this.txtAnimation(tl1,1);
 
     // LEFT -> RIGHT /GameHub
     tl1
@@ -241,7 +236,7 @@ export class ModelAnimationService {
         { zIndex: 0, opacity: 0 },
         '-=0.5'
       );
-    this.txtAnimation(tl1, 4);
+    this.txtAnimation(tl1,4);
   }
 
 }
