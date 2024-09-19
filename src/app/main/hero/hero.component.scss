@@ -25,8 +25,9 @@
   width: 50%;
 
   p {
+    cursor: default;
     color: white;
-    font-size: 2.4em;
+    font-size: var(--heading-size);
     text-wrap: pretty;
     text-align: center;
     font-family: var(--body-font);
@@ -46,7 +47,6 @@
     transition: 0.3s;
   }
   &:hover {
-    cursor: cell;
     color: #a0a0a0;
   }
   &:hover::after {
@@ -59,13 +59,13 @@
   padding: 1.2rem;
 }
 
-.proj-scroll-indicator {
-  font-family: var(--heading-font);
-  letter-spacing: 1.2px;
-  opacity: 0.75;
-  font-size: 1.8rem;
-  color: white;
-}
+// .proj-scroll-indicator {
+//   font-family: var(--heading-font);
+//   letter-spacing: 1.2px;
+//   opacity: 0.75;
+//   font-size: 1.8rem;
+//   color: white;
+// }
 
 .middle {
   width: 100%;

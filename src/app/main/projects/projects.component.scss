@@ -20,12 +20,11 @@
 }
 
 .laptop-container {
-  // display: none;
   display: flex;
   position: absolute;
   z-index: 1;
-  max-height: 860.2px;
   filter: brightness(0.5);
+  // display: none;
   // outline: 1px dashed green;
 }
 
@@ -45,12 +44,11 @@
 }
 
 .phone-container {
-  // display: none;
   display: flex;
   position: absolute;
   z-index: 1;
-  max-height: 860.2px;
-  // outline: 1px solid green;
+  // display: none;
+  // outline: 1px solid red;
 }
 
 #phone-screen {
@@ -120,12 +118,14 @@
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  padding-inline: 10%;
+  margin-inline: 10%;
+  position: relative;
   // outline: 1px solid blue;
+
 
   .left {
     position: relative;
-    // outline: 1px solid gray;
+    // outline: 1px solid yellow;
 
     .lft {
       position: absolute;
@@ -135,7 +135,7 @@
 
   .right {
     position: relative;
-    // outline: 1px solid gray;
+    // outline: 1px solid purple;
 
     .rght {
       position: absolute;
@@ -143,3 +143,10 @@
     }
   }
 }
+
+@media (max-width: 1600px) {
+  .slide-container{
+    margin-inline: 2rem;
+  }
+}
+

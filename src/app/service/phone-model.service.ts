@@ -36,8 +36,10 @@ export class PhoneModelService {
   private windowHalfX = window.innerWidth / 2;
   private windowHalfY = window.innerHeight / 2;
 
-  WIDTH: number = window.innerWidth * 0.8;
-  HEIGHT: number = window.innerHeight * 0.8;
+  // WIDTH: number = window.innerWidth * 0.8;
+  // HEIGHT: number = window.innerHeight * 0.8;
+  WIDTH: number = window.innerWidth;
+  HEIGHT: number = window.innerHeight;
 
   Screen_MESH?: any;
   cssObject?: any;
@@ -118,7 +120,8 @@ export class PhoneModelService {
     
     this.mesh = gltf.scene;
     this.mesh.scale.set(120,120,120);
-    this.mesh.position.set(-100, -160, 0);
+    this.mesh.position.set(-135, -160, 0);
+    // this.mesh.position.set(-100, -160, 0);
 
     this.Screen_MESH = this.mesh.getObjectByName('Object_4');
 
@@ -174,7 +177,6 @@ export class PhoneModelService {
 
     this.Screen_MESH.matrixWorld.decompose(position, quaternion, scale);
 
-    // this.cssObject.position.set(40,0,0);
     
     
     this.cssObject.position.copy(position);

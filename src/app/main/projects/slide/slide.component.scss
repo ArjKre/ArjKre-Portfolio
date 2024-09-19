@@ -7,7 +7,7 @@
 .heading {
   font-family: var(--subheading-font);
   font-weight: 100;
-  font-size: 2.4rem;
+  font-size: var(--heading-size);
   width: fit-content;
 }
 
@@ -20,7 +20,7 @@
 .para,
 .tech {
   font-family: var(--body-font);
-  font-size: 1.6rem;
+  font-size: var(--para-size);
 }
 
 .tech {

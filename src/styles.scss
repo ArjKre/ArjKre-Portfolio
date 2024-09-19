@@ -7,6 +7,9 @@
   --subheading-font: "General Sans", sans-serif;
   --sub-font: "Cabinet Grotesk";
   --main-color: rgba(7, 7, 7);
+  --display-size: 7.8rem;
+  --heading-size : 2.4rem;
+  --para-size: 1.6rem;
 }
 
 html {
@@ -21,11 +24,6 @@ html {
   text-decoration: none;
 }
 
-*body{
-  //  &::-webkit-scrollbar {
-  //    display: none;
-  //  }
-}
 
 
 #encom-globe-canvas {
@@ -76,5 +74,13 @@ html {
     opacity: 1;
     transform: none;
     filter: blur(0px);
+  }
+}
+
+@media (max-width: 1300px) {
+  :root{
+    --para-size: 1.4rem;
+    --display-size: 7rem;
+    --heading-size : 2rem;
   }
 }

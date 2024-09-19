@@ -1,4 +1,4 @@
-import { ElementRef, Injectable } from '@angular/core';
+import { ElementRef, Injectable, HostListener } from '@angular/core';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { LaptopModelService } from './laptop-model.service';
@@ -13,9 +13,6 @@ export class ModelAnimationService {
   private laptopElement!: HTMLElement;
   private phoneElement!: HTMLElement;
   private contentElements!: ElementRef<HTMLElement>[];
-
-  private modelPinPositionXAxis!: number;
-
   private slideLaptopImages?: HTMLElement;
   private screenContent1?: HTMLElement;
   private screenContent2?: HTMLElement;
@@ -24,21 +21,29 @@ export class ModelAnimationService {
   private slidePhoneImages?: HTMLElement;
   private phnScreenContent1?: HTMLElement;
 
+  private xAxis: number = 0;
+
   constructor(private model: LaptopModelService) {}
 
   runModelAnimation(
     projectContainer: HTMLElement,
     laptop: HTMLElement,
     phone: HTMLElement,
-    contentSlides: ElementRef<HTMLElement>[]
+    contentSlides: ElementRef<HTMLElement>[],
   ) {
     this.projectContainer = projectContainer;
     this.laptopElement = laptop;
     this.phoneElement = phone;
     this.contentElements = contentSlides;
-    this.modelPinPositionXAxis = window.innerWidth / 2 / 2;
-    this.ModelAnimation();
+    
+    this.setXaxis();
+    this.ModelAnimation();   
   }
+  
+  private setXaxis() : void {
+    this.xAxis = document.getElementById('lftcnct')!.clientWidth /2;
+  }
+
 
   private txtAnimation(timeline: gsap.core.Timeline, idx: number) {
     return timeline.to(
@@ -49,33 +54,40 @@ export class ModelAnimationService {
   }
 
   private ModelAnimation() {
+
     // Phone Model Invisible
     gsap.set(this.phoneElement, {
       opacity: 0,
-      translateX: -this.modelPinPositionXAxis,
+      translateX: -this.xAxis,
     });
 
     // SlideElements
     this.contentElements.forEach((slide) => {
-      // console.log(slide.nativeElement);
       gsap.set(slide.nativeElement, { opacity: 0 });
     });
 
+    let ranOnce = false;
     const tl_1 = gsap.timeline({
       scrollTrigger: {
         id: 'open',
-        // markers: true,
         trigger: this.projectContainer,
         start: 'top top+=300',
         end: '+=300',
+        invalidateOnRefresh : true,
         onUpdate: (self) => {
-          this.slideLaptopImages = document.getElementById('laptopScreenContent')!;
-          this.screenContent1 = this.slideLaptopImages!.querySelector('.img1')!;
-          this.screenContent2 = this.slideLaptopImages!.querySelector('.img2')!;
-          this.video = this.slideLaptopImages!.querySelector('video')!;
+          this.slideLaptopImages = document.getElementById(
+            'laptopScreenContent'
+          )!;
 
-          this.slidePhoneImages = document.getElementById('phoneScreenContent')!;
-          this.phnScreenContent1 = this.slidePhoneImages!.querySelector('.ph1')!;
+          if(!ranOnce){
+            this.screenContent1 = this.slideLaptopImages!.querySelector('.img1')!;
+            this.screenContent2 = this.slideLaptopImages!.querySelector('.img2')!;
+            this.video = this.slideLaptopImages!.querySelector('video')!;
+            
+            this.slidePhoneImages =document.getElementById('phoneScreenContent')!;
+            this.phnScreenContent1 =this.slidePhoneImages!.querySelector('.ph1')!;
+            ranOnce = true;
+          }
 
           this.model!.closeAndOpenAnimation(self.progress);
 
@@ -93,7 +105,7 @@ export class ModelAnimationService {
 
     const tl1 = gsap.timeline({
       scrollTrigger: {
-        id: 'tl1',
+        id: 'this.tl1',
         // markers: {
         //   indent: 400,
         // },
@@ -102,7 +114,7 @@ export class ModelAnimationService {
         end: 'bottom',
         pin: true,
         pinSpacing: false,
-        scrub: 1.5, // Smoother and slower scrub
+        scrub: 1.5, 
         invalidateOnRefresh: true,
       },
     });
@@ -111,7 +123,7 @@ export class ModelAnimationService {
     tl1.fromTo(
       this.laptopElement,
       { translateX: 0 },
-      { translateX: -this.modelPinPositionXAxis},
+      { translateX: -this.xAxis },
       '+=0.1'
     );
     this.txtAnimation(tl1, 2);
@@ -121,15 +133,10 @@ export class ModelAnimationService {
       .fromTo(
         this.laptopElement,
         {
-          translateX: -this.modelPinPositionXAxis,
-          // onReverse: () => {
-          //   if (this.screenContent1) {
-          //     this.screenContent1!.style.opacity = '0';
-          //   }
-          // },
+          translateX: -this.xAxis,
         },
         {
-          translateX: this.modelPinPositionXAxis,
+          translateX: this.xAxis,
           onComplete: () => {
             if (this.screenContent1) {
               this.screenContent1!.style.opacity = '0';
@@ -153,9 +160,9 @@ export class ModelAnimationService {
     tl1
       .fromTo(
         this.laptopElement,
-        { translateX: this.modelPinPositionXAxis },
+        { translateX: this.xAxis },
         {
-          translateX: -this.modelPinPositionXAxis,
+          translateX: -this.xAxis,
           onComplete: () => {
             if (this.screenContent1) {
               this.screenContent2!.style.opacity = '0';
@@ -186,22 +193,27 @@ export class ModelAnimationService {
     tl1
       .fromTo(
         this.laptopElement,
-        { translateX: -this.modelPinPositionXAxis },
-        { translateX: this.modelPinPositionXAxis, opacity: 0,onComplete:()=>{
-          if(this.screenContent2){
-            this.video!.pause();
-            this.video!.currentTime = 0;
-          }
-        },onReverseComplete:()=>{
-          if (this.screenContent1) {
-            this.video!.play();
-          }
-        } }
+        { translateX: -this.xAxis },
+        {
+          translateX: this.xAxis,
+          opacity: 0,
+          onComplete: () => {
+            if (this.screenContent2) {
+              this.video!.pause();
+              this.video!.currentTime = 0;
+            }
+          },
+          onReverseComplete: () => {
+            if (this.screenContent1) {
+              this.video!.play();
+            }
+          },
+        }
       )
       .fromTo(
         this.phoneElement,
-        { translateX: -this.modelPinPositionXAxis, opacity: 0 },
-        { translateX: this.modelPinPositionXAxis, opacity: 1}
+        { translateX: -this.xAxis, opacity: 0 },
+        { translateX: this.xAxis, opacity: 1 }
       );
     this.txtAnimation(tl1, 1);
 
@@ -209,17 +221,20 @@ export class ModelAnimationService {
     tl1
       .fromTo(
         this.phoneElement,
-        { translateX: this.modelPinPositionXAxis },
-        { translateX: -this.modelPinPositionXAxis ,
-          onComplete:()=>{
-          if(this.phnScreenContent1){
-            this.phnScreenContent1.style.opacity ='0';
-          }
-        },onReverseComplete:()=>{
-          if(this.phnScreenContent1){
-            this.phnScreenContent1.style.opacity ='1';
-          }
-        } }
+        { translateX: this.xAxis },
+        {
+          translateX: -this.xAxis,
+          onComplete: () => {
+            if (this.phnScreenContent1) {
+              this.phnScreenContent1.style.opacity = '0';
+            }
+          },
+          onReverseComplete: () => {
+            if (this.phnScreenContent1) {
+              this.phnScreenContent1.style.opacity = '1';
+            }
+          },
+        }
       )
       .to(
         this.contentElements[1].nativeElement,
@@ -228,4 +243,5 @@ export class ModelAnimationService {
       );
     this.txtAnimation(tl1, 4);
   }
+
 }

@@ -1,10 +1,10 @@
 TODO
-    ☐ In About Section
+    ✔ In About Section @done(24-09-17 20:54)
         ✔ writing down the content for About Section @started(24-09-16 16:38) @done(24-09-16 16:38) @lasted(11s)
         ✔ Implement on resume click download's resume. @done(24-09-16 19:25)
     ☐ Redesign navbar
     ☐ Setup Resize function for all the models
-        ☐ Font Sizes & Layout
+        ✔ Font Sizes & Layout @started(24-09-18 02:04) @done(24-09-19 19:00) @lasted(1d16h56m35s)
         ☐ Laptop Model
         ☐ Laptop Screen-Content
         ☐ Phone Model

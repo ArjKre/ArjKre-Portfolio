@@ -34,14 +34,14 @@
 
   p {
     font-family: var(--body-font);
-    font-size: 1.6rem;
+    font-size: var(--para-size);
     line-height: 1.65;
   }
 
   .resume {
     width: min-content;
     font-family: var(--body-font);
-    font-size: 1.6rem;
+    font-size: var(--para-size);
     line-height: 1.65;
     position: relative;
     cursor: pointer;

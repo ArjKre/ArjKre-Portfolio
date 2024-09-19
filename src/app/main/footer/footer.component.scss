@@ -44,10 +44,10 @@
 
 .email {
   font-family: var(--heading-font);
-  font-size: 12.5rem;
+  font-size: var(--display-size);
   font-weight: bold;
   text-decoration: underline;
-  text-decoration-thickness: 10px;
+  text-decoration-thickness: 7px;
   color: whitesmoke;
   transition: 0.83s transform ease-out;
   transform: translateX(0);
@@ -147,7 +147,7 @@
 .left {
   margin-left: 0.5rem;
   p {
-    font-size: 1.6rem;
+    font-size: var(--para-size);
     font-family: var(--body-font);
     opacity: 0.7;
   }
@@ -211,7 +211,7 @@
 }
 
 .Copyright {
-  font-size: 1.6rem;
+  font-size: var(--para-size);
   font-family: var(--body-font);
   margin: 0 auto;
   opacity: 0.4;

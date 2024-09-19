@@ -7,7 +7,7 @@ import { Component, ElementRef, Output, ViewChild, EventEmitter, AfterViewInit }
 })
 export class FooterComponent implements AfterViewInit {
   
-  email = 'arj@kr3.in';
+  email = 'crkreshnan916@gmail.com';
   emailLink = `mailto:${this.email}`;
   isPaused = false;
 

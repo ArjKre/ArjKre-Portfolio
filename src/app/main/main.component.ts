@@ -51,6 +51,12 @@ export class MainComponent implements AfterViewInit {
     }
   }
 
+  @HostListener('window:resize',[])
+  onResize(){
+    location.reload();
+  }
+
+
   accessGlobeElement(event: ElementRef<HTMLElement>) {
     this.heroContainer = event.nativeElement;
   }
@@ -68,17 +74,21 @@ export class MainComponent implements AfterViewInit {
   }
 
   checkAndInitialize() {
-    this.globeAnimation.runGlobeAnimation(
-      this.heroContainer!,
-      this.projectContainer!
-    );
-    this.modelAnimation.runModelAnimation(
-      this.projectContainer!,
-      this.laptopCanvas!,
-      this.phoneCanvas!,
-      this.contentElements!
-    );
+    if (this.heroContainer && this.projectContainer) {
+      this.globeAnimation.runGlobeAnimation(this.heroContainer, this.projectContainer);
+    }
+    
+    if (this.projectContainer && this.laptopCanvas && this.phoneCanvas && this.contentElements) {
+      this.modelAnimation.runModelAnimation(
+        this.projectContainer,
+        this.laptopCanvas,
+        this.phoneCanvas,
+        this.contentElements,
+      );
+    }
   }
+
+
 
   accessFooterHeight(event: HTMLElement) {
     this.FooterElement = event;
