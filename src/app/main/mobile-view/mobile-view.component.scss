@@ -1,0 +1,146 @@
+.mobile-view-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--sub-color);
+}
+
+.flx {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+
+  .para {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    align-items: center;
+    font-family: var(--subheading-font);
+
+    p {
+      font-size: var(--para-size);
+    }
+
+    h1 {
+      font-size: 3.2rem;
+      word-spacing: 1.25px;
+    }
+  }
+
+  @media (max-width: 450px) {
+    .para p{
+        font-size: var(--para-size) / 1.125;
+    }
+    .para h1{
+        font-size: calc(3.2rem /1.125);
+    }
+  }
+
+  .hr-container {
+    padding-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+
+  }
+
+  .line {
+    position: absolute;
+    width: 47%;
+    border: none;
+    height: 1.5px;
+    background-color: rgba(255, 255, 255, 0.4);
+  }
+  .lft {
+    left: 0;
+  }
+  .rght {
+    right: 0;
+  }
+
+  .beating-heart {
+    padding-left: 2.4px;
+    position: absolute;
+    animation: heartbeat 1.4s infinite;
+
+    img {
+      height: 15px;
+    }
+
+    @keyframes heartbeat {
+      0% {
+        transform: scale(1);
+      }
+      12.5% {
+        transform: scale(1);
+      }
+      25% {
+        transform: scale(1);
+      }
+      37.5% {
+        transform: scale(1.2);
+      }
+      50% {
+        transform: scale(1);
+      }
+      62.5% {
+        transform: scale(1.2);
+      }
+      75% {
+        transform: scale(1);
+      }
+      87.5% {
+        transform: scale(1);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+  }
+}
+
+.personal-info {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 0.3rem;
+    padding: 0rem 4.8rem;
+  }
+
+  .content {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-right: 0.5rem;
+  
+  
+    .linkedin-icon {
+      opacity: 0.5;
+      transition: 0.3s opacity ease-out;
+      img {
+        height: 2.5rem;
+      }
+      &:hover{
+        opacity: 1;
+      }
+    }
+  
+    .github-icon {
+      opacity: 0.5;
+      transition: 0.3s opacity ease-out;
+  
+      img {
+        height: 2.5rem;
+      }
+  
+      &:hover{
+        opacity: 1;
+      }
+    }
+  }

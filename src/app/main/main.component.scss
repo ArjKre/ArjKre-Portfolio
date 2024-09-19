@@ -3,6 +3,8 @@
   background-color: var(--main-color);
   overflow-x: hidden;
   overflow-y: hidden;
+  height: 100%;
+  width: 100%;
 }
 
 .app-navbar {
@@ -35,6 +37,38 @@
   left: 0;
   right: 0;
   z-index: 1;
+}
+
+.app-mobile-view{
+  display: none;
+}
+
+@media (max-width: 1000px) {
+  
+  .app-hero{
+    display: none;
+  }
+
+  .app-projects{
+    display: none;
+  }
+
+  .app-navbar{
+    display: none;
+  }
+
+  .app-footer{
+    display: none;
+  }
+
+  .app-mobile-view{
+    display: contents;
+  }
+
+  .main-container{
+    height: 100dvh;
+  }
+
 }
 
 .aboutClicked{

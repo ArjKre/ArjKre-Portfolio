@@ -14,6 +14,7 @@ import { SlideComponent } from './main/projects/slide/slide.component';
 import { ProjectsComponent } from './main/projects/projects.component';
 import { FooterComponent } from './main/footer/footer.component';
 import { AboutComponent } from './main/about/about.component';
+import { MobileViewComponent } from './main/mobile-view/mobile-view.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { AboutComponent } from './main/about/about.component';
     SlideComponent,
     ProjectsComponent,
     FooterComponent,
-    AboutComponent
+    AboutComponent,
+    MobileViewComponent
   ],
   imports: [
     BrowserModule,
