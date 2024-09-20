@@ -211,6 +211,7 @@ export class ModelAnimationService {
         { translateX: this.xAxis, opacity: 1 }
       );
     this.txtAnimation(tl1,1);
+    tl1.to(this.phoneElement,{},'-=0.1');
 
     // LEFT -> RIGHT /GameHub
     tl1
