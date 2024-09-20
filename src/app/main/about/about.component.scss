@@ -4,31 +4,28 @@
   gap: 3rem;
   width: 80vh;
   margin: 0 auto;
-  // outline: 1px solid blue;
 
   .header {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    // outline: 1px solid green;
 
     h1 {
       font-family: var(--body-font);
       font-weight: bold;
     }
 
-    img{
-        // outline: 1px solid red;
-        height: 30px;
-        filter: invert(1);
-        cursor: pointer;
-        opacity: 0.7;
-        transition: 0.3s opacity ease-out;
+    img {
+      height: 30px;
+      filter: invert(1);
+      cursor: pointer;
+      opacity: 0.7;
+      transition: 0.3s opacity ease-out;
 
-        &:hover{
-            opacity: 1;
-        }
+      &:hover {
+        opacity: 1;
+      }
     }
   }
 
@@ -39,7 +36,7 @@
   }
 
   .resume {
-    width: min-content;
+    width: fit-content;
     font-family: var(--body-font);
     font-size: var(--para-size);
     line-height: 1.65;
@@ -47,25 +44,38 @@
     cursor: pointer;
     text-decoration: none;
 
+    span {
+      font-size: 0.8rem;
+      position: relative;
+      top: -0.5rem;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+
+    &:hover {
+      span {
+        opacity: 1;
+      }
+    }
+
     &::after {
       content: "";
       position: absolute;
       bottom: 0px;
       left: 0px;
       height: 2px;
-      width: 100%;
+      width: 85%;
       background-color: white;
       opacity: 0.4;
       transition: 0.3s opacity ease-out;
     }
     &:hover::after {
-      color: green;
+      color: #a0a0a0;
       opacity: 1;
     }
 
-    &:visited{
+    &:visited {
       color: inherit;
     }
   }
 }
-

@@ -1,20 +1,19 @@
 
 .con-txt {
   max-width: fit-content;
-  // outline: 1px dashed #ff0000;
 }
 
 .heading {
-  font-family: var(--subheading-font);
-  font-weight: 100;
+  font-family: var(--heading-font);
+  font-weight: 900;
   font-size: var(--heading-size);
   width: fit-content;
+  font-style: italic;
 }
 
 .para {
-  padding-top: 1.2rem;
+  padding-top: 0.3rem;
   text-wrap: pretty;
-  // width: 50%;
 }
 
 .para,
@@ -24,7 +23,6 @@
 }
 
 .tech {
-  // width: max-content;
   display: flex;
   gap: min(2.5rem,2%);
   padding-top: 1rem;
@@ -33,6 +31,5 @@
 .tech-txt {
   position: relative;
   cursor: pointer;
-  // z-index: 1;
 }
 

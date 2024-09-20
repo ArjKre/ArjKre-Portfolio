@@ -3,7 +3,7 @@
     <div class="laptop-container" #laptop>
       <div class="screen-content" id="laptopScreenContent">
         <div class="slide-images">
-          <svg class="slide-image img1"></svg>
+          <svg class="slide-image img1" onclick="window.open('https://arjkre.github.io/UP_School/index.html', '_blank')"></svg>
           <svg class="slide-image img2"></svg>
           <svg class="slide-image vid">
             <foreignObject style="width: 100%; height: 100%">
@@ -18,7 +18,6 @@
         </div>
       </div>
       <div id="laptop-screen" #laptopScreen></div>
-      <!-- <hr style="height: 100%; position: absolute; left: 50%; background-color: blue;"> -->
     </div>
     <div class="phone-container" #phone>
       <div class="screen-content" id="phoneScreenContent">
@@ -58,11 +57,11 @@
         </div>
       </div>
       <div id="phone-screen" #phoneScreen></div>
-      <!-- <hr style="height: 100%; position: absolute; left: 50%; background-color: blue;"> -->
     </div>
     <div class="slide-container">
       <div class="left">
-        <app-slide [_currentContent]="this.content[1]" #appslide></app-slide>
+        <app-slide [_currentContent]="this.content[1]" #appslide>
+        </app-slide>
         <app-slide class="lft" id="lftcnct" [_currentContent]="this.content[3]" #appslide></app-slide>
       </div>
       <div class="right">
@@ -70,7 +69,6 @@
         <app-slide class="rght" [_currentContent]="this.content[2]" #appslide></app-slide>
         <app-slide class="rght" [_currentContent]="this.content[4]" #appslide></app-slide>
       </div>
-      <!-- <hr style="width: 100%;top: 50%;position: absolute;"/> -->
     </div>
   </div>
 </div>

@@ -118,7 +118,11 @@ export class ModelAnimationService {
     });
 
     // CENTER -> LEFT /GOVT UP
-    tl1.fromTo(this.laptopElement,{ translateX: 0 },{ translateX: -this.xAxis },'+=0.1');
+    tl1.fromTo(this.laptopElement,{ translateX: 0 },{ translateX: -this.xAxis,onStart:()=>{
+      if(this.screenContent1){
+        this.screenContent1.style.cursor =  'url(../../../assets/svg/new-tab.svg),auto';
+      }
+    } },'+=0.1');
     this.txtAnimation(tl1, 2);
     tl1.to(this.laptopElement,{},'-=0.1');
 
@@ -133,11 +137,13 @@ export class ModelAnimationService {
           translateX: this.xAxis,
           onComplete: () => {
             if (this.screenContent1) {
+              this.screenContent1.style.cursor =  'default';
               this.screenContent1!.style.opacity = '0';
             }
           },
           onReverseComplete: () => {
             if (this.screenContent1) {
+              this.screenContent1.style.cursor =  'url(../../../assets/svg/new-tab.svg),auto';
               this.screenContent1!.style.opacity = '1';
             }
           },

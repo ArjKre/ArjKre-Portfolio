@@ -5,8 +5,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
   template: `
     <div class="navbar-container">
       <a>
-        <div class="img-container">
-          <img [src]="imagePath" class="prf" alt="logo"  (click)="imgClick()" />
+        <div class="logo-container">
+           <p (click)="imgClick()">Arjun Kreshnan <span>↗</span></p>
         </div>
       </a>
       <div class="link-container underline-transition">
@@ -34,7 +34,7 @@ export class NavbarComponent implements OnInit {
   contactClick() {
     window.scrollTo({
       top: document.body.scrollHeight,
-      behavior: 'smooth',
+      behavior: 'auto',
     });
   }
 
