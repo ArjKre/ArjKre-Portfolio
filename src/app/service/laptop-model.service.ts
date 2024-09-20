@@ -111,8 +111,8 @@ export class LaptopModelService {
   private loadModel(): void {
     this.modelLoader.load(
       'scene.glb',
-      (_gltf: any) => {
-        this.onModelLoaded(_gltf);
+      (_glb: any) => {
+        this.onModelLoaded(_glb);
       },
       undefined,
       (error) =>
@@ -120,8 +120,8 @@ export class LaptopModelService {
     );
   }
 
-  private onModelLoaded(gltf: any): void {
-    this.mesh = gltf.scene;
+  private onModelLoaded(glb: any): void {
+    this.mesh = glb.scene;
     this.mesh.position.set(0, -100, 0);
     this.mesh.scale.set(55, 55, 40);
     this.mesh.castShadow = true;

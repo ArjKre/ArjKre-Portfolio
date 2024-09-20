@@ -1,6 +1,7 @@
 import { ElementRef, Injectable, NgZone } from '@angular/core';
 import * as THREE from 'three';
-import { GLTFLoader, GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
+import { GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
 import { CSS3DObject, CSS3DRenderer } from 'three/examples/jsm/renderers/CSS3DRenderer';
 
 @Injectable({
@@ -22,6 +23,7 @@ export class PhoneModelService {
   private modelLoader: GLTFLoader = new GLTFLoader().setPath(
     this.PHONE_MODEL_FILE
   );
+  private dracoLoader: DRACOLoader = new DRACOLoader();
 
   private mesh!: THREE.Group;
   private mixer!: THREE.AnimationMixer;
@@ -45,6 +47,10 @@ export class PhoneModelService {
 
   constructor(private ngZone: NgZone) {
     this.CursorTracker();
+    this.dracoLoader.setDecoderPath(
+      'https://www.gstatic.com/draco/versioned/decoders/1.5.6/'
+    );
+    this.modelLoader.setDRACOLoader(this.dracoLoader);
   }
 
   assignCanvasId(parentElement: HTMLElement, name: string): void {
@@ -79,7 +85,7 @@ export class PhoneModelService {
     });
     this.phoneRenderer.outputColorSpace = THREE.SRGBColorSpace;
     this.phoneRenderer.setSize(width, height);
-    this.phoneRenderer.setClearColor(0x000000, 0);
+    this.phoneRenderer.setClearColor(0x880808, 0);
     this.phoneRenderer.setPixelRatio(window.devicePixelRatio);
   }
 
@@ -104,9 +110,9 @@ export class PhoneModelService {
 
   private loadModel(): void {
     this.modelLoader.load(
-      'phone.gltf',
-      (_gltf: any) => {
-        this.onModelLoad(_gltf);
+      'phone.glb',
+      (_glb: any) => {
+        this.onModelLoad(_glb);
       },
       undefined,
       (error) =>
@@ -114,9 +120,9 @@ export class PhoneModelService {
     );
   }
 
-  private onModelLoad(gltf : GLTF): void{
+  private onModelLoad(glb : any): void{
     
-    this.mesh = gltf.scene;
+    this.mesh = glb.scene;
     this.mesh.scale.set(120,120,120);
     this.mesh.position.set(-135, -160, 0);
     // this.mesh.position.set(-100, -160, 0);
