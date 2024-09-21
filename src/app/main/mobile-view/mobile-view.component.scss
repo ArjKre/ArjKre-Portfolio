@@ -18,10 +18,15 @@
     flex-direction: column;
     gap: 0.3rem;
     align-items: center;
-    font-family: var(--subheading-font);
+    font-family: var(--body-font);
 
     p {
       font-size: var(--para-size);
+    }
+
+    span{
+      font-style: italic;
+      text-decoration: underline;
     }
 
     h1 {
